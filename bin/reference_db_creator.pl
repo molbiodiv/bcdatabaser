@@ -94,9 +94,14 @@ Log::Log4perl->init(
 my $L = Log::Log4perl::get_logger();
 
 my $reference_db_creator = ReferenceDbCreator->new({
-	'marker_search_string' => $opt_marker_search_string
+	'marker_search_string' => $opt_marker_search_string,
+    'outdir' => $opt_outdir
 });
 # $reference_db_creator->run_XXX();
+
+sub logfile{
+	return "$opt_outdir/reference_db_creator.log";
+}
 
 __END__
 

@@ -20,12 +20,9 @@ Optional
 
 ### Output
 Basic:
- - Sequence fasta (filtered/trimmed/taxonomy in header)
+ - Sequence fasta (filtered/trimmed/sintax style taxonomy header)
  - Taxonomy table
  - Taxonomy report (Krona)
-
-Additional:
- - Classifier training files
 
 ### Steps
  - Check dependencies

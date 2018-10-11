@@ -40,3 +40,7 @@ Additional:
  
 ## Dataset Upload
  - via zenodo with fixed metadata (referencing our doi)
+ 
+## Web Interface
+ - list and download existing datasets
+ - create new datasets on the server

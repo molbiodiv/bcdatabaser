@@ -19,7 +19,7 @@ Optional
  - Degenerate primers (trimming/orientation)
 
 ### Output
-Naming scheme: <Marker>.<Taxonomic Group>.<country code>.<date>
+Naming scheme: `<Marker>.<Taxonomic Group>.<country code>.<date>`
 
 Basic:
  - Sequence fasta (filtered/trimmed/sintax style taxonomy header)

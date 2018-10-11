@@ -19,6 +19,8 @@ Optional
  - Degenerate primers (trimming/orientation)
 
 ### Output
+Naming scheme: <Marker>.<Taxonomic Group>.<country code>.<date>
+
 Basic:
  - Sequence fasta (filtered/trimmed/sintax style taxonomy header)
  
@@ -31,7 +33,6 @@ Additional:
  - Download sequences
  - optional: trim/orient via HMM or primers
  - Add taxonomy
- - optional: train classifiers
  - Write reports
 
 ### Helper scripts

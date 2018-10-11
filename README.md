@@ -21,8 +21,9 @@ Optional
 ### Output
 Basic:
  - Sequence fasta (filtered/trimmed/sintax style taxonomy header)
- - Taxonomy table
- - Taxonomy report (Krona)
+ 
+Additional:
+ - Report (e.g. Taxonomy table (Krona))
 
 ### Steps
  - Check dependencies

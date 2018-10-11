@@ -37,3 +37,6 @@ Additional:
 
 ### Helper scripts
  - geographicRange2taxonList
+ 
+## Dataset Upload
+ - via zenodo with fixed metadata (referencing our doi)

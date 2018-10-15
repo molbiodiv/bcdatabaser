@@ -55,9 +55,36 @@ sub search_ncbi{
 	my $outdir = $self->{outdir};
 	my $search_term = $self->{marker_search_string};
 	my $edirect_dir = $self->{edirect_dir};
-	my $full_search_string = "($search_term) AND Viridiplantae[ORGN] AND 100:2000[SLEN]";
+	my $full_search_string = "($search_term) AND Taraxacum[ORGN] AND 100:2000[SLEN]";
 	my $cmd = $edirect_dir."esearch -db nuccore -query \"$full_search_string\" | ".$edirect_dir."efetch -format docsum | ".$edirect_dir."xtract -pattern DocumentSummary -element Caption,TaxId > $outdir/list.txt";
 	$self->run_command($cmd, "Run search against NCBI");
+}
+
+sub download_sequences{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	my $batch_size = 100;
+	my $edirect_dir = $self->{edirect_dir};
+	my $efetch_bin = $edirect_dir."efetch";
+	my $epost_bin = $edirect_dir."epost";
+
+	# get number of results
+	my $num_results = qx(wc -l $outdir/list.txt);
+	$L->info("Number of search results: $num_results");
+
+	# clear sequence file (might exist from previous incomplete run)
+	$L->info("Removing $outdir/sequences.fa if it exists");
+	if ( -e $outdir."/sequences.fa" ) {
+        unlink($outdir."/sequences.fa") or $L->logdie("$!");
+    }
+	
+	$L->info("Now downloading sequences in batches of $batch_size");
+	for(my $i=1; $i<=$num_results; $i+=$batch_size){
+		my $msg = "Downloading fasta sequences for batch: $i - ".($i+$batch_size-1);
+		my $cmd = "tail -n+$i $outdir/list.txt | head -n $batch_size | cut -f1 | $epost_bin -db nuccore | $efetch_bin -format fasta >>$outdir/sequences.fa";
+		$self->run_command($cmd, $msg);
+	}
+	$L->info("Finished downloading sequences");
 }
 
 sub run_command{

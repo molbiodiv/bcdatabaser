@@ -110,6 +110,7 @@ my $reference_db_creator = ReferenceDbCreator->new({
     'edirect_dir' => $opt_edirect_dir
 });
 $reference_db_creator->search_ncbi();
+$reference_db_creator->download_sequences();
 
 sub logfile{
 	return "$opt_outdir/reference_db_creator.log";

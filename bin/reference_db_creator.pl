@@ -78,7 +78,7 @@ if($opt_version){
     exit 0;
 }
 pod2usage(1) if ($opt_help);
-pod2usage( -msg => "No marker search string specified. Use --marker-search-string='<SEARCHSTRING>'", -verbose => 0, -exitval => 1 )  unless ( $opt_marker_search_string );
+pod2usage( -msg => "No marker search string specified. Use --marker-search-string='<SEARCHSTRING>'", -verbose => 0, -exitval => 1, -output => \*STDERR )  unless ( $opt_marker_search_string );
 
 # init a root logger in exec mode
 Log::Log4perl->init(

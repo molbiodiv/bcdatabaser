@@ -50,5 +50,29 @@ sub create_outdir_if_not_exists{
 	}
 }
 
+sub search_ncbi{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	my $search_term = $self->{marker_search_string};
+	my $edirect_dir = $self->{edirect_dir};
+	my $full_search_string = "($search_term) AND Viridiplantae[ORGN] AND 100:2000[SLEN]";
+	my $cmd = $edirect_dir."esearch -db nuccore -query \"$full_search_string\" | ".$edirect_dir."efetch -format docsum | ".$edirect_dir."xtract -pattern DocumentSummary -element Caption,TaxId > $outdir/list.txt";
+	$self->run_command($cmd, "Run search against NCBI");
+}
+
+sub run_command{
+	my $self = shift;
+	my $cmd = shift;
+	my $msg = shift;
+	my $ignore_error = shift;
+	$L->info("Starting: $msg");
+	$L->info($cmd);
+	my $result = qx($cmd);
+	$L->debug($result);
+	$L->logdie("ERROR: $msg failed") if $? >> 8 and !$ignore_error;
+	$L->info("Finished: $msg");
+	return $result;
+}
+
 
 1;

@@ -9,7 +9,12 @@ let GetoptArgvFile = buildPerlPackage rec {
 in
 stdenv.mkDerivation {
   name = "reference_db_creator";
-  buildInputs = [ perlPackages.TestScript GetoptArgvFile perl ];
+  buildInputs = with perlPackages; [
+    TestScript
+    GetoptArgvFile
+    DateTimeFormatNatural
+    perl
+  ];
   shellHook = ''
     export PERL5LIB=$PWD/lib:$PERL5LIB
   '';

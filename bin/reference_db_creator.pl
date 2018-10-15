@@ -50,6 +50,15 @@ output directory for the generated output files (default: reference_db_creator)
 
 $options{'outdir=s'} = \( my $opt_outdir="reference_db_creator" );
 
+=item [--edirect-dir <STRING>]
+
+directory containing the entrez direct utilities (default: empty, look for programs in PATH)
+More info about edirect: https://www.ncbi.nlm.nih.gov/books/NBK179288/
+
+=cut
+
+$options{'edirect-dir=s'} = \( my $opt_edirect_dir="" );
+
 =item [--help]
 
 show help
@@ -79,6 +88,8 @@ if($opt_version){
 }
 pod2usage(1) if ($opt_help);
 pod2usage( -msg => "No marker search string specified. Use --marker-search-string='<SEARCHSTRING>'", -verbose => 0, -exitval => 1, -output => \*STDERR )  unless ( $opt_marker_search_string );
+# Append / to edirect dir if it is not empty and does not already contain a trailing slash
+$opt_edirect_dir .= "/" if($opt_edirect_dir && substr($opt_edirect_dir,-1) ne "/");
 
 # init a root logger in exec mode
 Log::Log4perl->init(
@@ -95,9 +106,10 @@ my $L = Log::Log4perl::get_logger();
 
 my $reference_db_creator = ReferenceDbCreator->new({
 	'marker_search_string' => $opt_marker_search_string,
-    'outdir' => $opt_outdir
+    'outdir' => $opt_outdir,
+    'edirect_dir' => $opt_edirect_dir
 });
-# $reference_db_creator->run_XXX();
+$reference_db_creator->search_ncbi();
 
 sub logfile{
 	return "$opt_outdir/reference_db_creator.log";

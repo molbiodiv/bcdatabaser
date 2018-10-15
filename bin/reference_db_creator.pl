@@ -111,6 +111,7 @@ my $reference_db_creator = ReferenceDbCreator->new({
 });
 $reference_db_creator->search_ncbi();
 $reference_db_creator->download_sequences();
+$reference_db_creator->add_taxonomy_to_fasta();
 
 sub logfile{
 	return "$opt_outdir/reference_db_creator.log";

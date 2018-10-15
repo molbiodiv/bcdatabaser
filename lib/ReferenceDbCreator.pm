@@ -2,6 +2,7 @@ package ReferenceDbCreator;
 
 use Log::Log4perl qw(:no_extra_logdie_message);
 use File::Path qw(make_path);
+use NCBI::Taxonomy;
 
 our $VERSION = '0.0.1';
 
@@ -85,6 +86,74 @@ sub download_sequences{
 		$self->run_command($cmd, $msg);
 	}
 	$L->info("Finished downloading sequences");
+}
+
+sub add_taxonomy_to_fasta{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	$L->info("Adding taxonomy to fasta");
+	my %acc2taxid = $self->get_accession_to_taxid_map();
+	open IN, "<$outdir/sequences.fa" or $L->logdie("$!");
+	open OUT, ">$outdir/sequences.tax.fa" or $L->logdie("$!");
+	while(<IN>){
+		if(/^>([^.\s]+)[.\s]/){
+			$lineage = $self->get_lineage_string_for_taxid($acc2taxid{$1});
+			print OUT ">$1;tax=$lineage;\n";
+		}
+		else{
+			print OUT;
+		}
+	}
+	close IN or $L->logdie("$!");
+	close OUT or $L->logdie("$!");
+	$L->info("Finished: Adding taxonomy to fasta");
+}
+
+sub get_lineage_string_for_taxid{
+	my $self = shift;
+	my $taxid = shift;
+	my @lineage = @{NCBI::Taxonomy::getlineagebytaxid($taxid)};
+    my %tax_elements;
+    foreach my $tax_element (@lineage){
+		$tax_elements{$tax_element->{rank}} = $tax_element->{sciname};
+    }
+	my @lineage_elements = ();
+	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'kingdom'));
+	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'domain'));
+	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'phylum'));
+	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'class'));
+	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'order'));
+	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'family'));
+	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'genus'));
+	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'species'));
+	my $tax_string = join(",",grep {$_} @lineage_elements);
+	return $tax_string;
+}
+
+sub get_tax_string_for_level{
+	my $self = shift;
+    my $tax_elements = shift;
+	my $level = shift;
+    my $prefix = substr($level, 0, 1);
+	my $taxstring = "";
+    if(defined $tax_elements->{$level}){
+		$taxstring = $prefix.":".$tax_elements->{$level};
+    }
+    return $taxstring;
+}
+
+sub get_accession_to_taxid_map{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	my %acc2taxid = {};
+	open IN, "<$outdir/list.txt" or $L->logdie("$!");
+	while(<IN>){
+		chomp;
+		my ($acc, $taxid) = split;
+		$acc2taxid{$acc} = $taxid;
+	}
+	close IN or $L->logdie("$!");
+	return %acc2taxid;
 }
 
 sub run_command{

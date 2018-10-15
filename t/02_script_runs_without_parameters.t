@@ -8,4 +8,4 @@ my $script = 'bin/reference_db_creator.pl';
 my %options = (exit => 1);
 
 Test::Script::script_runs($script, \%options, "Test if script runs without parameters");
-script_stdout_like(qr/Usage/, "Result of run without parameters returned Usage information");
+script_stderr_like(qr/Usage/, "Result of run without parameters returned Usage information");

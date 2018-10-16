@@ -61,17 +61,17 @@ Example: --taxonomic-range Viridiplantae
 
 $options{'taxonomic-range=s'} = \( my $opt_taxonomic_range="" );
 
-=item [--taxon-list <FILENAME>]
+=item [--taxa-list <FILENAME>]
 
 File with list of scientific (or common) names to include (one per line).
 Attention: All children of higher taxonomic ranks will be included.
 This will be added to the query string as "AND (<SCINAME1>[ORGN] OR <SCINAME2>[ORGN] ...)".
 Default: empty (no restriction)
-Example: --taxon-list plants_in_germany.txt
+Example: --taxa-list plants_in_germany.txt
 
 =cut
 
-$options{'taxon-list=s'} = \( my $opt_taxon_list="" );
+$options{'taxa-list=s'} = \( my $opt_taxa_list="" );
 
 =item [--sequence-length-filter <SLEN>]
 
@@ -144,7 +144,7 @@ my $reference_db_creator = ReferenceDbCreator->new({
     'outdir' => $opt_outdir,
     'edirect_dir' => $opt_edirect_dir,
     'taxonomic_range' => $opt_taxonomic_range,
-    'taxon_list' => $opt_taxon_list,
+    'taxa_list' => $opt_taxa_list,
     'sequence_length_filter' => $opt_sequence_length_filter
 });
 $reference_db_creator->search_ncbi();

@@ -58,10 +58,12 @@ sub search_ncbi{
 	my $edirect_dir = $self->{edirect_dir};
 	my $full_search_string = "($search_term)";
 	# add taxonomic range
-	$taxonomic_range = $self->{taxonomic_range};
+	my $taxonomic_range = $self->{taxonomic_range};
 	$full_search_string .= " AND $taxonomic_range\[ORGN]" if($taxonomic_range);
+	# add taxon list (empty string if taxa file not given or empty)
+	$full_search_string .= $self->get_taxa_filter_string_from_taxfile();
 	# add seq length range
-	$seqlen_filter = $self->{sequence_length_filter};
+	my $seqlen_filter = $self->{sequence_length_filter};
 	$full_search_string .= " AND $seqlen_filter\[SLEN]" if($seqlen_filter);
 	# exclud EST and GSS data
 	$full_search_string .= " NOT gbdiv est[prop] NOT gbdiv gss[prop]";
@@ -116,6 +118,23 @@ sub add_taxonomy_to_fasta{
 	close IN or $L->logdie("$!");
 	close OUT or $L->logdie("$!");
 	$L->info("Finished: Adding taxonomy to fasta");
+}
+
+sub get_taxa_filter_string_from_taxfile{
+	my $self = shift;
+	$taxa_list = $self->{taxa_list};
+	return "" unless($taxa_list);
+	my $taxa_filter_string = "";
+	my @taxa = ();
+	open IN, "<$taxa_list" or $L->logdie("$!");
+	while(<IN>){
+		chomp;
+		my $taxon = $_."[ORGN]";
+		push(@taxa, $taxon);
+	}
+	close IN or $L->logdie("$!");
+	return "" unless(@taxa);
+	return " AND (".join(" OR ", @taxa).")";
 }
 
 sub get_lineage_string_for_taxid{

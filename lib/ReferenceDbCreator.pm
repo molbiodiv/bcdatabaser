@@ -56,7 +56,14 @@ sub search_ncbi{
 	my $outdir = $self->{outdir};
 	my $search_term = $self->{marker_search_string};
 	my $edirect_dir = $self->{edirect_dir};
-	my $full_search_string = "($search_term) AND Taraxacum[ORGN] AND 100:2000[SLEN]";
+	my $full_search_string = "($search_term)";
+	# add taxonomic range
+	$full_search_string .= " AND Taraxacum[ORGN]";
+	# add seq length range
+	$full_search_string .= " AND 100:2000[SLEN]";
+	# exclud EST and GSS data
+	$full_search_string .= " NOT gbdiv est[prop] NOT gbdiv gss[prop]";
+	$L->info("Full search string: ".$full_search_string);
 	my $cmd = $edirect_dir."esearch -db nuccore -query \"$full_search_string\" | ".$edirect_dir."efetch -format docsum | ".$edirect_dir."xtract -pattern DocumentSummary -element Caption,TaxId > $outdir/list.txt";
 	$self->run_command($cmd, "Run search against NCBI");
 }

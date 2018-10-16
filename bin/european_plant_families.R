@@ -1,5 +1,7 @@
 # R script by Andreas Kolter to get european plant families via gbif
 
+# a related script can be found here: http://sacrevert.blogspot.com/2018/04/creating-country-checklists-using-gbif.html
+
 european_plant_families <- function(pl_family_unique)
 {
   library(rgbif)

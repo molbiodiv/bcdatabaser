@@ -50,6 +50,41 @@ output directory for the generated output files (default: reference_db_creator)
 
 $options{'outdir=s'} = \( my $opt_outdir="reference_db_creator" );
 
+=item [--taxonomic-range <SCINAME>]
+
+Scientific (or common) name of the taxon all sequences have to belong to.
+This will be added to the query string as "AND <SCINAME>[ORGN]".
+Default: empty (no restriction)
+Example: --taxonomic-range Viridiplantae
+
+=cut
+
+$options{'taxonomic-range=s'} = \( my $opt_taxonomic_range="" );
+
+=item [--taxon-list <FILENAME>]
+
+File with list of scientific (or common) names to include (one per line).
+Attention: All children of higher taxonomic ranks will be included.
+This will be added to the query string as "AND (<SCINAME1>[ORGN] OR <SCINAME2>[ORGN] ...)".
+Default: empty (no restriction)
+Example: --taxon-list plants_in_germany.txt
+
+=cut
+
+$options{'taxon-list=s'} = \( my $opt_taxon_list="" );
+
+=item [--sequence-length-filter <SLEN>]
+
+Sequence length filter for search at NCBI (single number or colon separated range).
+This is only applied to the search initial search via "AND <SLEN>[SLEN]".
+Empty string means no restriction.
+Default: empty (no restriction)
+Example: --sequence-length-filter 100:2000
+
+=cut
+
+$options{'sequence-length-filter=s'} = \( my $opt_sequence_length_filter="" );
+
 =item [--edirect-dir <STRING>]
 
 directory containing the entrez direct utilities (default: empty, look for programs in PATH)
@@ -107,7 +142,10 @@ my $L = Log::Log4perl::get_logger();
 my $reference_db_creator = ReferenceDbCreator->new({
 	'marker_search_string' => $opt_marker_search_string,
     'outdir' => $opt_outdir,
-    'edirect_dir' => $opt_edirect_dir
+    'edirect_dir' => $opt_edirect_dir,
+    'taxonomic_range' => $opt_taxonomic_range,
+    'taxon_list' => $opt_taxon_list,
+    'sequence_length_filter' => $opt_sequence_length_filter
 });
 $reference_db_creator->search_ncbi();
 $reference_db_creator->download_sequences();

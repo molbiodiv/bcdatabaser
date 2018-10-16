@@ -58,9 +58,11 @@ sub search_ncbi{
 	my $edirect_dir = $self->{edirect_dir};
 	my $full_search_string = "($search_term)";
 	# add taxonomic range
-	$full_search_string .= " AND Taraxacum[ORGN]";
+	$taxonomic_range = $self->{taxonomic_range};
+	$full_search_string .= " AND $taxonomic_range\[ORGN]" if($taxonomic_range);
 	# add seq length range
-	$full_search_string .= " AND 100:2000[SLEN]";
+	$seqlen_filter = $self->{sequence_length_filter};
+	$full_search_string .= " AND $seqlen_filter\[SLEN]" if($seqlen_filter);
 	# exclud EST and GSS data
 	$full_search_string .= " NOT gbdiv est[prop] NOT gbdiv gss[prop]";
 	$L->info("Full search string: ".$full_search_string);

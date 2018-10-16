@@ -75,7 +75,7 @@ sub search_ncbi{
 sub download_sequences{
 	my $self = shift;
 	my $outdir = $self->{outdir};
-	my $batch_size = 100;
+	my $batch_size = $self->{edirect_batch_size};
 	my $edirect_dir = $self->{edirect_dir};
 	my $efetch_bin = $edirect_dir."efetch";
 	my $epost_bin = $edirect_dir."epost";
@@ -97,6 +97,28 @@ sub download_sequences{
 		$self->run_command($cmd, $msg);
 	}
 	$L->info("Finished downloading sequences");
+}
+
+sub filter_and_orient_by_primers{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	my $primer_file = $self->{primer_file};
+	return unless($primer_file);
+	# filter/crop
+	my $dispr_bin = $self->{dispr_bin};
+	my $msg = "Get products of in silico pcr with provided degenerate primers: $primer_file";
+	my $rawoutfile = "$outdir/sequences.dispr.raw.fa";
+	my $cmd = "$dispr_bin --primers $primer_file --ref $outdir/sequences.tax.fa --seq $rawoutfile";
+	$self->run_command($cmd, $msg);
+	# fix orientation
+	$self->run_command("sed -i 's/,/_/' $rawoutfile", "Replace problematic ',' in fasta header with '_'");
+	# avoid exit status 1 if grep finds no matches
+	$self->run_command("grep ':r_f:' $rawoutfile >$outdir/tmp_seqs_to_revcomp || true", "Get list of sequences to reverse complement");
+	my $seqfilter_bin = $self->{seqfilter_bin};
+	my $msg = "Fix orientation of sequences cropped with dispr";
+	my $cmd = "$seqfilter_bin --rev-comp $outdir/tmp_seqs_to_revcomp $rawoutfile --out $outdir/sequences.dispr.fa";
+	unlink("$outdir/tmp_seqs_to_revcomp");
+	$self->run_command($cmd, $msg);
 }
 
 sub add_taxonomy_to_fasta{
@@ -155,6 +177,8 @@ sub get_lineage_string_for_taxid{
 	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'genus'));
 	push(@lineage_elements, $self->get_tax_string_for_level(\%tax_elements, 'species'));
 	my $tax_string = join(",",grep {$_} @lineage_elements);
+	# replace whitespace with _, this is not required for sintax but for most other downstream tools
+	$tax_string =~ s/ /_/g;
 	return $tax_string;
 }
 

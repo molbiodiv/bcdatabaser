@@ -94,6 +94,54 @@ More info about edirect: https://www.ncbi.nlm.nih.gov/books/NBK179288/
 
 $options{'edirect-dir=s'} = \( my $opt_edirect_dir="" );
 
+=item [--edirect-batch-size <INT>]
+
+Sequence download is split into batches of <INT> sequences to avoid network timeouts.
+Default: 100
+
+=cut
+
+$options{'edirect-batch-size=i'} = \( my $opt_edirect_batch_size=100 );
+
+=item [--seqfilter-bin <STRING>]
+
+Path to the executable of SeqFilter (https://github.com/BioInf-Wuerzburg/SeqFilter)
+Default: SeqFilter (assumes SeqFilter to be in PATH)
+
+=cut
+
+$options{'seqfilter-bin=s'} = \( my $opt_seqfilter_bin="SeqFilter" );
+
+=item [--dispr-bin <STRING>]
+
+Path to the executable of dispr (https://github.com/douglasgscofield/dispr) for degenerate in silico pcr for filtering, trimming, and orientation
+In order to use dispr --primer-file must be provided as well
+Default: dispr (assumes dispr to be in PATH)
+
+=cut
+
+$options{'dispr-bin=s'} = \( my $opt_dispr_bin="dispr" );
+
+=item [--primer-file <FILENAME>]
+
+Path to the primers file for dispr.
+From the dispr help text:
+
+        Fasta-format file containing primer sequences.  Each
+        primer sequence must have a name of the format
+          >tag:F       or   >tag:R
+          CCYATGTAYY        CTBARRSTG
+        indicating forward and reverse primers, respectively.
+        Valid IUPAC-coded sequences are required.
+        The tag is used to mark hits involving the primer pair
+        and must be identical for each forward-reverse pair.
+
+Default: empty (dispr not used for filtering/trimming/orientation)
+
+=cut
+
+$options{'primer-file=s'} = \( my $opt_primer_file="" );
+
 =item [--help]
 
 show help
@@ -143,13 +191,18 @@ my $reference_db_creator = ReferenceDbCreator->new({
 	'marker_search_string' => $opt_marker_search_string,
     'outdir' => $opt_outdir,
     'edirect_dir' => $opt_edirect_dir,
+    'edirect_batch_size' => $opt_edirect_batch_size,
     'taxonomic_range' => $opt_taxonomic_range,
     'taxa_list' => $opt_taxa_list,
-    'sequence_length_filter' => $opt_sequence_length_filter
+    'sequence_length_filter' => $opt_sequence_length_filter,
+    'seqfilter_bin' => $opt_seqfilter_bin,
+    'dispr_bin' => $opt_dispr_bin,
+    'primer_file' => $opt_primer_file
 });
 $reference_db_creator->search_ncbi();
 $reference_db_creator->download_sequences();
 $reference_db_creator->add_taxonomy_to_fasta();
+$reference_db_creator->filter_and_orient_by_primers();
 
 sub logfile{
 	return "$opt_outdir/reference_db_creator.log";

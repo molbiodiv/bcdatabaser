@@ -1,0 +1,2 @@
+perl bin/reference_db_creator.pl --outdir its2.bellis.custom.2018-11-05 --marker-search-string "(ITS2 OR internal transcribed spacer 2)" --taxonomic-range Bellis --sequence-length-filter 100:2000
+perl bin/reference_db_creator.pl --outdir its2.viridiplantae.custom.2018-11-05 --marker-search-string "(ITS2 OR internal transcribed spacer 2)" --taxonomic-range Viridiplantae --sequence-length-filter 100:2000 --primer-file data/primers/its2.sickel2015.fa

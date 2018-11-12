@@ -208,6 +208,26 @@ sub get_accession_to_taxid_map{
 	return %acc2taxid;
 }
 
+sub combine_filtered_and_raw_sequences{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	my $primer_file = $self->{primer_file};
+	return unless($primer_file);
+	my $seqfilter_bin = $self->{seqfilter_bin};
+	my $dispr_file = "$outdir/sequences.dispr.fa";
+	$self->run_command("grep '^>' $dispr_file | cut -f1 -d';' >$outdir/tmp_seqs_clean || true", "Get list of filtered sequences (to exclude the raw ones)");
+	$self->run_command("sed 's/;/ ;/' $outdir/sequences.tax.fa >$outdir/tmp_seqs_fix_header", "Create file with fixed header for filtering");
+	$L->info("Combine filtered and raw sequences (use filtered if available, else use raw)");
+	my $msg = "Extract raw sequences that have no filtered version";
+	my $cmd = "$seqfilter_bin --ids-exclude --ids $outdir/tmp_seqs_clean $outdir/tmp_seqs_fix_header --out - | sed 's/ ;tax/;tax/' >$outdir/sequences.combined.fa";
+	$self->run_command($cmd, $msg);
+	unlink("$outdir/tmp_seqs_to_revcomp");
+	unlink("$outdir/tmp_seqs_fix_header");
+	my $msg = "Add filtered sequences where available";
+	my $cmd = "cat $dispr_file >>$outdir/sequences.combined.fa";
+	$self->run_command($cmd, $msg);
+}
+
 sub create_krona_summary{
 	my $self = shift;
 	my $outdir = $self->{outdir};

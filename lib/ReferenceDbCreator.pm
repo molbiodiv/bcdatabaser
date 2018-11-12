@@ -3,6 +3,7 @@ package ReferenceDbCreator;
 use Log::Log4perl qw(:no_extra_logdie_message);
 use File::Path qw(make_path);
 use NCBI::Taxonomy;
+use FindBin;
 
 our $VERSION = '0.0.1';
 
@@ -235,6 +236,12 @@ sub create_krona_summary{
 	my $msg = "Create krona chart for taxonomy distribution in database";
 	my $cmd = "$krona_bin -t 2 -o $outdir/taxonomy.krona.html $outdir/list.txt";
 	$self->run_command($cmd, $msg);
+}
+
+sub add_citation_file{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	$self->run_command("cp $FindBin::RealBin/../CITATION $outdir/", "Add CITATION file to output directory");
 }
 
 sub run_command{

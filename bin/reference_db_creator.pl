@@ -219,6 +219,7 @@ $reference_db_creator->combine_filtered_and_raw_sequences();
 # TODO #10
 #$reference_db_creator->write_summary_statistics();
 $reference_db_creator->create_krona_summary();
+$reference_db_creator->add_citation_file();
 
 sub logfile{
 	return "$opt_outdir/reference_db_creator.log";

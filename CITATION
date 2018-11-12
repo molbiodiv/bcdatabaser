@@ -1,0 +1,12 @@
+If you use this software, please cite it as below:
+
+Keller A., Hohlfeld S., Kolter A., Schultz J., Gemeinholzer B., Ankenbrand M.J.;
+"BCdatabaser: on-the-fly reference database creation for (meta-)barcoding";
+https://github.com/molbiodiv/metabDB
+
+Please also cite the software used by this pipeline:
+ - NCBI eutils: https://www.ncbi.nlm.nih.gov/books/NBK25500/
+ - NCBI::Taxonomy module: https://github.com/greatfireball/NCBI-Taxonomy
+ - SeqFilter: https://github.com/BioInf-Wuerzburg/SeqFilter
+ - dispr: https://github.com/molbiodiv/metabDB/issues
+ - Krona: https://github.com/marbl/Krona

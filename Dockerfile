@@ -11,7 +11,7 @@ RUN cd /NCBI-Taxonomy && perl Makefile.PL && make && perl make_taxid_indizes.pl
 RUN sed -i 's#\./t/data#/NCBI-Taxonomy#' /NCBI-Taxonomy/lib/NCBI/Taxonomy.pm
 
 RUN git clone https://github.com/douglasgscofield/dispr
-RUN ln -s /dispr/dispr /bin/dispr
+RUN ln -s /dispr/dispr /usr/bin/dispr
 # Install optional re::engine::RE2 for better performance
 RUN perl -MCPAN -e 'my $c = "CPAN::HandleConfig"; $c->load(doit => 1, autoconfig => 1); $c->edit(prerequisites_policy => "follow"); $c->edit(build_requires_install_policy => "yes"); $c->commit'
 RUN cpan -f re::engine::RE2
@@ -21,6 +21,10 @@ RUN mkdir /Krona/KronaTools/taxonomy
 RUN cd /Krona/KronaTools && ./install.pl # && ./updateTaxonomy.sh
 
 ENV PERL5LIB=/NCBI-Taxonomy/lib:$PERL5LIB
+
+RUN git clone https://github.com/BioInf-Wuerzburg/SeqFilter
+RUN cd /SeqFilter && make
+RUN ln -s /SeqFilter/bin/SeqFilter /usr/bin/SeqFilter
 
 COPY bin/ /metabDB/bin
 COPY lib/ /metabDB/lib

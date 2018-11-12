@@ -18,7 +18,7 @@ RUN cpan -f re::engine::RE2
 
 RUN git clone https://github.com/marbl/Krona
 RUN mkdir /Krona/KronaTools/taxonomy
-RUN cd /Krona/KronaTools && ./install.pl # && ./updateTaxonomy.sh
+RUN cd /Krona/KronaTools && ./install.pl && ./updateTaxonomy.sh
 
 ENV PERL5LIB=/NCBI-Taxonomy/lib:$PERL5LIB
 

@@ -105,6 +105,15 @@ Default: 100
 
 $options{'edirect-batch-size=i'} = \( my $opt_edirect_batch_size=100 );
 
+=item [--krona-bin <STRING>]
+
+Path to the executable of ktImportTaxonomy (https://github.com/marbl/Krona)
+Default: ktImportTaxonomy (assumes Krona Tools to be in PATH)
+
+=cut
+
+$options{'krona-bin=s'} = \( my $opt_krona_bin="ktImportTaxonomy" );
+
 =item [--seqfilter-bin <STRING>]
 
 Path to the executable of SeqFilter (https://github.com/BioInf-Wuerzburg/SeqFilter)
@@ -197,6 +206,7 @@ my $reference_db_creator = ReferenceDbCreator->new({
     'taxonomic_range' => $opt_taxonomic_range,
     'taxa_list' => $opt_taxa_list,
     'sequence_length_filter' => $opt_sequence_length_filter,
+    'krona_bin' => $opt_krona_bin,
     'seqfilter_bin' => $opt_seqfilter_bin,
     'dispr_bin' => $opt_dispr_bin,
     'primer_file' => $opt_primer_file
@@ -209,6 +219,7 @@ $reference_db_creator->filter_and_orient_by_primers();
 #$reference_db_creator->combine_filtered_and_raw_sequences();
 # TODO #10
 #$reference_db_creator->write_summary_statistics();
+$reference_db_creator->create_krona_summary();
 
 sub logfile{
 	return "$opt_outdir/reference_db_creator.log";

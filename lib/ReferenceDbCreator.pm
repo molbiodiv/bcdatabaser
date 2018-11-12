@@ -117,8 +117,8 @@ sub filter_and_orient_by_primers{
 	my $seqfilter_bin = $self->{seqfilter_bin};
 	my $msg = "Fix orientation of sequences cropped with dispr";
 	my $cmd = "$seqfilter_bin --rev-comp $outdir/tmp_seqs_to_revcomp $rawoutfile --out $outdir/sequences.dispr.fa";
-	unlink("$outdir/tmp_seqs_to_revcomp");
 	$self->run_command($cmd, $msg);
+	unlink("$outdir/tmp_seqs_to_revcomp");
 }
 
 sub add_taxonomy_to_fasta{
@@ -206,6 +206,15 @@ sub get_accession_to_taxid_map{
 	}
 	close IN or $L->logdie("$!");
 	return %acc2taxid;
+}
+
+sub create_krona_summary{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	my $krona_bin = $self->{krona_bin};
+	my $msg = "Create krona chart for taxonomy distribution in database";
+	my $cmd = "$krona_bin -t 2 -o $outdir/taxonomy.krona.html $outdir/list.txt";
+	$self->run_command($cmd, $msg);
 }
 
 sub run_command{

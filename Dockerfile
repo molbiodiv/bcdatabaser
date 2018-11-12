@@ -16,6 +16,10 @@ RUN ln -s /dispr/dispr /bin/dispr
 RUN perl -MCPAN -e 'my $c = "CPAN::HandleConfig"; $c->load(doit => 1, autoconfig => 1); $c->edit(prerequisites_policy => "follow"); $c->edit(build_requires_install_policy => "yes"); $c->commit'
 RUN cpan -f re::engine::RE2
 
+RUN git clone https://github.com/marbl/Krona
+RUN mkdir /Krona/KronaTools/taxonomy
+RUN cd /Krona/KronaTools && ./install.pl # && ./updateTaxonomy.sh
+
 ENV PERL5LIB=/NCBI-Taxonomy/lib:/metabDB/lib:$PERL5LIB
 
 COPY bin/ /metabDB/bin

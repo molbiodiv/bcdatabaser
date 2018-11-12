@@ -20,7 +20,7 @@ RUN git clone https://github.com/marbl/Krona
 RUN mkdir /Krona/KronaTools/taxonomy
 RUN cd /Krona/KronaTools && ./install.pl # && ./updateTaxonomy.sh
 
-ENV PERL5LIB=/NCBI-Taxonomy/lib:/metabDB/lib:$PERL5LIB
+ENV PERL5LIB=/NCBI-Taxonomy/lib:$PERL5LIB
 
 COPY bin/ /metabDB/bin
 COPY lib/ /metabDB/lib

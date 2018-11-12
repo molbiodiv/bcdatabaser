@@ -2,6 +2,8 @@
 use strict;
 use warnings;
 use Pod::Usage;
+use FindBin;
+use lib "$FindBin::RealBin/../lib";
 use Log::Log4perl qw(:no_extra_logdie_message);
 use Getopt::Long;
 use Getopt::ArgvFile;

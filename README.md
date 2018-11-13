@@ -98,6 +98,14 @@ docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev\
  --sequence-length-filter 100:2000
 ```
 
+This created a folder `its2.bellis.full.2018-11-12` in your current working directory with the following content:
+ - **sequences.tax.fa**: the sequences with sinax-style taxonomy information in the header
+ - **taxonomy.krona.html**: Krona chart of the taxa in the resulting database
+ - **list.txt**: list of accessions and taxids downloaded
+ - **sequences.fa**: the raw sequence download
+ - **reference_db_creator.log**: log file with all the messages printed to stdout
+ - **CITATION**: info on how to cite this pipeline
+
 Advance example (ITS2 sequences for a custom species list with trimming using dispr):
 ```
 docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev\
@@ -108,6 +116,10 @@ docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev\
  --sequence-length-filter 100:20000\
  --primer-file /metabDB/data/primers/its2.sickel2015.fa
 ```
+
+This creates a folder ` ` in your current working directory with the following additional files (compaded to the previous example):
+ - **sequences.dispr.fa**: the sequences that were successfully trimmed and oriented using dispr and the provided primer pairs
+ - **sequences.combined.fa**: the trimmed/oriented sequences from above or the raw ones if the primer pair was not found on that sequence
 
 ## Command Line Reference
 

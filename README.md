@@ -56,12 +56,12 @@ docker pull iimog/metabdb_dev
 
 The default command of this container is the `reference_db_creator.pl` script so you can execute this command.
 ```bash
-docker run --rm metabdb_dev --help
+docker run --rm iimog/metabdb_dev --help
 ```
 
 In order to use data from your local directory inside the container and operate as your current user (instead of root):
 ```bash
-docker run -u $UID:$GID -v $PWD:/data --rm metabdb_dev # arguments
+docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev # arguments
 ```
 
 You're all set, skip to the [Examples](#examples) section to get started.
@@ -90,7 +90,7 @@ For Singularity or local installations the commands have to be adjusted accordin
 
 Simple example (ITS2 sequences for the genus Bellis):
 ```
-docker run -u $UID:$GID -v $PWD:/data --rm metabdb\
+docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev\
  --outdir its2.bellis.full.2018-11-12\
  --marker-search-string "(ITS2 OR internal transcribed spacer 2)"\
  --taxonomic-range Bellis\
@@ -99,7 +99,7 @@ docker run -u $UID:$GID -v $PWD:/data --rm metabdb\
 
 Advance example (ITS2 sequences for a custom species list with trimming using dispr):
 ```
-docker run -u $UID:$GID -v $PWD:/data --rm metabdb\
+docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev\
  --outdir its2.viridiplantae.custom.2018-11-12\
  --marker-search-string "(ITS2 OR internal transcribed spacer 2)"\
  --taxonomic-range Viridiplantae\

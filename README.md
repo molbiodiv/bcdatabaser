@@ -63,6 +63,7 @@ In order to use data from your local directory inside the container and operate 
 ```bash
 docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev # arguments
 ```
+If you see this message: `whoami: cannot find name for user ID` apear in the log, you can ignore it. This is because your user is not known to the docker container but this will not cause any problems.
 
 You're all set, skip to the [Examples](#examples) section to get started.
 

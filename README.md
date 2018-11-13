@@ -39,8 +39,74 @@ Additional:
  - geographicRange2taxonList
 
 ## Installation
+This pipeline consists of a perl script that depends on a number of libraries.
+It also utilizes external programs that need to be available. See the next section for details.
+As it can be difficult to download and setup all the dependencies we provide a ready to use docker container.
+We recommend using this container (it should also work with singularity).
+However, if you want or need a native installation please see the websites of the modules and tools
+for installation instructions for your platform and refer to the steps in the [Dockerfile](./Dockerfile).
+If you encounter any problems please open an [issue](https://github.com/molbiodiv/metabDB/issues) and we will do our best to help.
+
+### Docker
+Pull the container from DockerHub and you are ready to go
+
+```bash
+docker pull iimog/metabdb_dev
+```
+
+The default command of this container is the `reference_db_creator.pl` script so you can execute this command.
+```bash
+docker run --rm metabdb_dev --help
+```
+
+In order to use data from your local directory inside the container and operate as your current user (instead of root):
+```bash
+docker run -u $UID:$GID -v $PWD:/data --rm metabdb_dev # arguments
+```
+
+You're all set, skip to the [Examples](#examples) section to get started.
+
+## Dependencies
+
+Perl Modules:
+ - Pod::Usage
+ - FindBin
+ - Log::Log4perl
+ - Getopt::Long
+ - Getopt::ArgvFile 
+ - File::Path
+ - [NCBI::Taxonomy](https://github.com/greatfireball/NCBI-Taxonomy)
+
+External Programs:
+ - [NCBI eutils](https://www.ncbi.nlm.nih.gov/books/NBK25500)
+ - [KronaTools](https://github.com/marbl/Krona)
+ - [SeqFilter](https://github.com/BioInf-Wuerzburg/SeqFilter)
+ - [dispr](https://github.com/molbiodiv/metabDB/issues)
 
 ## Examples
+
+These examples assume that you are using the docker installation.
+For Singularity or local installations the commands have to be adjusted accordingly.
+
+Simple example (ITS2 sequences for the genus Bellis):
+```
+docker run -u $UID:$GID -v $PWD:/data --rm metabdb\
+ --outdir its2.bellis.full.2018-11-12\
+ --marker-search-string "(ITS2 OR internal transcribed spacer 2)"\
+ --taxonomic-range Bellis\
+ --sequence-length-filter 100:2000
+```
+
+Advance example (ITS2 sequences for a custom species list with trimming using dispr):
+```
+docker run -u $UID:$GID -v $PWD:/data --rm metabdb\
+ --outdir its2.viridiplantae.custom.2018-11-12\
+ --marker-search-string "(ITS2 OR internal transcribed spacer 2)"\
+ --taxonomic-range Viridiplantae\
+ --taxa-list /metabDB/examples/some_plants.txt\
+ --sequence-length-filter 100:20000\
+ --primer-file /metabDB/data/primers/its2.sickel2015.fa
+```
 
 ## Command Line Reference
 
@@ -143,3 +209,7 @@ Options:
 ## Web Interface - planned but not yet implemented
  - list and download existing datasets
  - create new datasets on the server
+
+## LICENSE
+
+This software is licensed under [MIT](./LICENSE). Be aware that the libraries and external programs are licensed separately (possibly under different licenses).

@@ -222,7 +222,7 @@ sub combine_filtered_and_raw_sequences{
 	my $msg = "Extract raw sequences that have no filtered version";
 	my $cmd = "$seqfilter_bin --ids-exclude --ids $outdir/tmp_seqs_clean $outdir/tmp_seqs_fix_header --out - | sed 's/ ;tax/;tax/' >$outdir/sequences.combined.fa";
 	$self->run_command($cmd, $msg);
-	unlink("$outdir/tmp_seqs_to_revcomp");
+	unlink("$outdir/tmp_seqs_clean");
 	unlink("$outdir/tmp_seqs_fix_header");
 	my $msg = "Add filtered sequences where available";
 	my $cmd = "cat $dispr_file >>$outdir/sequences.combined.fa";

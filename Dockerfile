@@ -26,6 +26,8 @@ RUN git clone https://github.com/BioInf-Wuerzburg/SeqFilter
 RUN cd /SeqFilter && make
 RUN ln -s /SeqFilter/bin/SeqFilter /usr/bin/SeqFilter
 
+COPY docker/whoami /usr/local/bin/whoami
+
 COPY . /metabDB
 
 WORKDIR /data

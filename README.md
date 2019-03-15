@@ -166,6 +166,12 @@ Options:
                              restriction. Default: empty (no restriction)
                              Example: --sequence-length-filter 100:2000
 
+    [--sequences-per-taxon <INTEGER>]
+                             Number of sequences to download for each
+                             distinct NCBI taxid. If there are more sequences
+                             for a taxid the longest ones are kept.
+                             Default: 3 Example: --sequences-per-taxon 1
+
     [--edirect-dir <STRING>] directory containing the entrez direct
                              utilities (default: empty, look for programs in
                              PATH) More info about edirect:

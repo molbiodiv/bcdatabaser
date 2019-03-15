@@ -87,6 +87,17 @@ Example: --sequence-length-filter 100:2000
 
 $options{'sequence-length-filter=s'} = \( my $opt_sequence_length_filter="" );
 
+=item [--sequences-per-taxon <INTEGER>]
+
+Number of sequences to download for each distinct NCBI taxid.
+If there are more sequences for a taxid the longest ones are kept.
+Default: 3
+Example: --sequences-per-taxon 1
+
+=cut
+
+$options{'sequences-per-taxon=i'} = \( my $opt_seqs_per_taxon=3 );
+
 =item [--edirect-dir <STRING>]
 
 directory containing the entrez direct utilities (default: empty, look for programs in PATH)
@@ -206,12 +217,14 @@ my $reference_db_creator = ReferenceDbCreator->new({
     'taxonomic_range' => $opt_taxonomic_range,
     'taxa_list' => $opt_taxa_list,
     'sequence_length_filter' => $opt_sequence_length_filter,
+    'seqs_per_taxon' => $opt_seqs_per_taxon,
     'krona_bin' => $opt_krona_bin,
     'seqfilter_bin' => $opt_seqfilter_bin,
     'dispr_bin' => $opt_dispr_bin,
     'primer_file' => $opt_primer_file
 });
 $reference_db_creator->search_ncbi();
+$reference_db_creator->limit_seqs_per_taxon();
 $reference_db_creator->download_sequences();
 $reference_db_creator->add_taxonomy_to_fasta();
 $reference_db_creator->filter_and_orient_by_primers();

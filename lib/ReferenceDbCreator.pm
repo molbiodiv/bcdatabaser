@@ -69,8 +69,40 @@ sub search_ncbi{
 	# exclud EST and GSS data
 	$full_search_string .= " NOT gbdiv est[prop] NOT gbdiv gss[prop]";
 	$L->info("Full search string: ".$full_search_string);
-	my $cmd = $edirect_dir."esearch -db nuccore -query \"$full_search_string\" | ".$edirect_dir."efetch -format docsum | ".$edirect_dir."xtract -pattern DocumentSummary -element Caption,TaxId > $outdir/list.txt";
+	my $cmd = $edirect_dir."esearch -db nuccore -query \"$full_search_string\" | ".$edirect_dir."efetch -format docsum | ".$edirect_dir."xtract -pattern DocumentSummary -element Caption,TaxId,Slen > $outdir/list.txt";
 	$self->run_command($cmd, "Run search against NCBI");
+}
+
+sub limit_seqs_per_taxon{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	my $seqs_per_taxon = $self->{seqs_per_taxon};
+
+	# get number of results
+	my $cmd = "sort -k2,2 -k 3,3nr $outdir/list.txt > $outdir/list.sorted.txt";
+	$self->run_command($cmd, "Sort sequence list by taxon and length");
+
+	$L->info("Filtering number of sequences per taxon by --sequences-per-taxon ($seqs_per_taxon) into $outdir/list.filtered.txt");
+	open(IN, "<$outdir/list.sorted.txt") or die "Can not open file $outdir/list.sorted.txt $!";
+	open(OUT, ">$outdir/list.filtered.txt") or die "Can not open file $outdir/list.filtered.txt $!";
+	my $last_taxid = "xxx";
+	my $taxid_count = 0;
+	while(<IN>){
+		chomp;
+		my ($acc, $taxid, $len) = split(/\t/);
+		if($taxid eq $last_taxid){
+			$taxid_count++;
+		} else {
+			$taxid_count = 0;
+		}
+		$last_taxid = $taxid;
+		if($taxid_count < $seqs_per_taxon){
+			print OUT "$acc\t$taxid\n";
+		}
+	}
+	close(OUT) or die "Can not close file $outdir/list.filtered.txt $!";
+	close(IN) or die "Can not close file $outdir/list.sorted.txt $!";
+	$L->info("Finished filtering sequence list");
 }
 
 sub download_sequences{
@@ -82,7 +114,7 @@ sub download_sequences{
 	my $epost_bin = $edirect_dir."epost";
 
 	# get number of results
-	my $num_results = qx(wc -l $outdir/list.txt);
+	my $num_results = qx(wc -l $outdir/list.filtered.txt);
 	$L->info("Number of search results: $num_results");
 
 	# clear sequence file (might exist from previous incomplete run)
@@ -94,7 +126,7 @@ sub download_sequences{
 	$L->info("Now downloading sequences in batches of $batch_size");
 	for(my $i=1; $i<=$num_results; $i+=$batch_size){
 		my $msg = "Downloading fasta sequences for batch: $i - ".($i+$batch_size-1);
-		my $cmd = "tail -n+$i $outdir/list.txt | head -n $batch_size | cut -f1 | $epost_bin -db nuccore | $efetch_bin -format fasta >>$outdir/sequences.fa";
+		my $cmd = "tail -n+$i $outdir/list.filtered.txt | head -n $batch_size | cut -f1 | $epost_bin -db nuccore | $efetch_bin -format fasta >>$outdir/sequences.fa";
 		$self->run_command($cmd, $msg);
 	}
 	$L->info("Finished downloading sequences");
@@ -199,7 +231,7 @@ sub get_accession_to_taxid_map{
 	my $self = shift;
 	my $outdir = $self->{outdir};
 	my %acc2taxid = {};
-	open IN, "<$outdir/list.txt" or $L->logdie("$!");
+	open IN, "<$outdir/list.filtered.txt" or $L->logdie("$!");
 	while(<IN>){
 		chomp;
 		my ($acc, $taxid) = split;
@@ -234,7 +266,7 @@ sub create_krona_summary{
 	my $outdir = $self->{outdir};
 	my $krona_bin = $self->{krona_bin};
 	my $msg = "Create krona chart for taxonomy distribution in database";
-	my $cmd = "$krona_bin -t 2 -o $outdir/taxonomy.krona.html $outdir/list.txt";
+	my $cmd = "$krona_bin -t 2 -o $outdir/taxonomy.krona.html $outdir/list.filtered.txt";
 	$self->run_command($cmd, $msg);
 }
 

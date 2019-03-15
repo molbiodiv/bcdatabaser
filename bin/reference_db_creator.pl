@@ -164,6 +164,18 @@ Default: empty (dispr not used for filtering/trimming/orientation)
 
 $options{'primer-file=s'} = \( my $opt_primer_file="" );
 
+=item [--zip]
+
+Create output .zip file containing the folder.
+If set the output folder will be zipped and deleted(!).
+So please be careful when using --zip and only use it with
+a dedicated subfolder specified with --outdir
+Default=false
+
+=cut
+
+$options{'zip'} = \( my $opt_zip = 0 );
+
 =item [--help]
 
 show help
@@ -233,6 +245,7 @@ $reference_db_creator->combine_filtered_and_raw_sequences();
 #$reference_db_creator->write_summary_statistics();
 $reference_db_creator->create_krona_summary();
 $reference_db_creator->add_citation_file();
+$reference_db_creator->zip_output() if($opt_zip);
 
 sub logfile{
 	return "$opt_outdir/reference_db_creator.log";

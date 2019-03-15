@@ -216,6 +216,12 @@ Options:
                              Default: empty (dispr not used for
                              filtering/trimming/orientation)
 
+    [--zip]                  Create output .zip file containing the folder.
+                             If set the output folder will be zipped and
+                             deleted(!). So please be careful when using
+                             --zip and only use it with a dedicated
+                             subfolder specified with --outdir Default=false
+
     [--help]                 show help
 
     [--version]              show version number of reference_db_creator and

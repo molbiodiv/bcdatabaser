@@ -276,6 +276,13 @@ sub add_citation_file{
 	$self->run_command("cp $FindBin::RealBin/../CITATION $outdir/", "Add CITATION file to output directory");
 }
 
+sub zip_output{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	$self->run_command("zip -r $outdir.zip $outdir", "Zipping output directory");
+	$self->run_command("rm -r $outdir", "Removing unzipped output directory");
+}
+
 sub run_command{
 	my $self = shift;
 	my $cmd = shift;

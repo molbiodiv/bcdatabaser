@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 use strict;
 use warnings;
 use Pod::Usage;
@@ -198,6 +198,7 @@ $options{'version'} = \( my $opt_version );
 
 =cut
 
+my @origARGV = @ARGV;
 GetOptions(%options) or pod2usage(1);
 if($opt_version){
     print "reference_db_creator version: ".$bcgTree::VERSION."\n";
@@ -235,6 +236,7 @@ my $reference_db_creator = ReferenceDbCreator->new({
     'dispr_bin' => $opt_dispr_bin,
     'primer_file' => $opt_primer_file
 });
+$L->info(join(" ", "Call:", $0, @origARGV));
 $reference_db_creator->search_ncbi();
 $reference_db_creator->limit_seqs_per_taxon();
 $reference_db_creator->download_sequences();

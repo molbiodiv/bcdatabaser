@@ -75,6 +75,30 @@ Example: --taxa-list plants_in_germany.txt
 
 $options{'taxa-list=s'} = \( my $opt_taxa_list="" );
 
+=item [--check-tax-names]
+
+If this option is set all taxon names provided by the user (--taxonomic-range and
+entries in the --taxa-list file) are checked against the names.dmp file from NCBI
+The program stops with an error if any species name is not listed in names.dmp.
+Set the path to the names.dmp file via --names-dmp-path
+Default: false
+
+=cut
+
+$options{'check-tax-names'} = \( my $opt_check_tax_names=0 );
+
+=item [--names-dmp-path <PATH>]
+
+Path to the NCBI taxonomy names.dmp file to check taxonomic names. Only relevant if
+--check-tax-names is set. The default value is suitable for use with the docker container.
+It is the same file used by NCBI::Taxonomy to assign the tax strings.
+Default: /NCBI-Taxonomy/names.dmp
+Example: --names-dmp-path $HOME/ncbi/names.dmp
+
+=cut
+
+$options{'names-dmp-path=s'} = \( my $opt_names_dmp_path="/NCBI-Taxonomy/names.dmp" );
+
 =item [--sequence-length-filter <SLEN>]
 
 Sequence length filter for search at NCBI (single number or colon separated range).
@@ -170,7 +194,7 @@ Create output .zip file containing the folder.
 If set the output folder will be zipped and deleted(!).
 So please be careful when using --zip and only use it with
 a dedicated subfolder specified with --outdir
-Default=false
+Default: false
 
 =cut
 
@@ -229,6 +253,8 @@ my $reference_db_creator = ReferenceDbCreator->new({
     'edirect_batch_size' => $opt_edirect_batch_size,
     'taxonomic_range' => $opt_taxonomic_range,
     'taxa_list' => $opt_taxa_list,
+    'check_tax_names' => $opt_check_tax_names,
+    'names_dmp_path' => $opt_names_dmp_path,
     'sequence_length_filter' => $opt_sequence_length_filter,
     'seqs_per_taxon' => $opt_seqs_per_taxon,
     'krona_bin' => $opt_krona_bin,

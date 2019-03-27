@@ -60,7 +60,12 @@ sub search_ncbi{
 	my $full_search_string = "($search_term)";
 	# add taxonomic range
 	my $taxonomic_range = $self->{taxonomic_range};
-	$full_search_string .= " AND $taxonomic_range\[ORGN]" if($taxonomic_range);
+	if($taxonomic_range){
+		unless($self->is_valid_tax_string($taxonomic_range)){
+			$L->logdie("Error: the --taxonomic-range is not a valid tax string: ".$taxonomic_range);
+		}
+		$full_search_string .= " AND $taxonomic_range\[ORGN]";
+	}
 	# add taxon list (empty string if taxa file not given or empty)
 	$full_search_string .= $self->get_taxa_filter_string_from_taxfile();
 	# add seq length range
@@ -71,6 +76,25 @@ sub search_ncbi{
 	$L->info("Full search string: ".$full_search_string);
 	my $cmd = $edirect_dir."esearch -db nuccore -query \"$full_search_string\" | ".$edirect_dir."efetch -format docsum | ".$edirect_dir."xtract -pattern DocumentSummary -element Caption,TaxId,Slen > $outdir/list.txt";
 	$self->run_command($cmd, "Run search against NCBI");
+}
+
+sub is_valid_tax_string{
+	my $self = shift;
+	my $query = shift;
+	return 1 unless($self->{check_tax_names});
+	my $valid_tax_strings = $self->{valid_tax_strings};
+	unless($valid_tax_strings){
+		$valid_tax_strings = {};
+		open(IN, "<".$self->{names_dmp_path}) or die "Can not open file ".$self->{names_dmp_path};
+		while(<IN>){
+			chomp;
+			my (undef, undef, $taxname) = split(/\t/);
+			$valid_tax_strings->{$taxname} = 1;
+		}
+		$self->{valid_tax_strings} = $valid_tax_strings;
+		close(IN) or die "Can not close file ".$self->{names_dmp_path}." $!";
+	}
+	return exists $valid_tax_strings->{$query};
 }
 
 sub limit_seqs_per_taxon{
@@ -193,6 +217,9 @@ sub get_taxa_filter_string_from_taxfile{
 	open IN, "<$taxa_list" or $L->logdie("$!");
 	while(<IN>){
 		chomp;
+		unless($self->is_valid_tax_string($_)){
+			$L->logdie("Error: an entry in the --taxa-list file is not a valid tax string: ".$_);
+		}
 		my $taxon = $_."[ORGN]";
 		push(@taxa, $taxon);
 	}

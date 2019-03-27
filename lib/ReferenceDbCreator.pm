@@ -161,17 +161,26 @@ sub add_taxonomy_to_fasta{
 	my %acc2taxid = $self->get_accession_to_taxid_map();
 	open IN, "<$outdir/sequences.fa" or $L->logdie("$!");
 	open OUT, ">$outdir/sequences.tax.fa" or $L->logdie("$!");
+	my $seqok = 0;
+	my $num_seq_notok = 0;
 	while(<IN>){
 		if(/^>([^.\s]+)[.\s]/){
 			$lineage = $self->get_lineage_string_for_taxid($acc2taxid{$1});
-			print OUT ">$1;tax=$lineage;\n";
+			if($lineage){
+				print OUT ">$1;tax=$lineage;\n";
+				$seqok = 1;
+			} else {
+				$seqok = 0;
+				$num_seq_notok++;
+			}
 		}
 		else{
-			print OUT;
+			print OUT if($seqok);
 		}
 	}
 	close IN or $L->logdie("$!");
 	close OUT or $L->logdie("$!");
+	$L->info("Number of sequences skipped because of missing taxonomy: ".$num_seq_notok);
 	$L->info("Finished: Adding taxonomy to fasta");
 }
 

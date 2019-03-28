@@ -319,6 +319,15 @@ sub zip_output{
 	$self->run_command("rm -r $outdir", "Removing unzipped output directory");
 }
 
+sub push_to_zenodo{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	my $zenodo_token_file = $self->{zenodo_token_file};
+	# set zenodo token as ENV to prevent it from being logged
+	$ENV{ZENODO_TOKEN} = $zenodo_token;
+	$self->run_command("python $FindBin::RealBin/push_to_zenodo.py ".'$('."cat $zenodo_token_file) $outdir.zip", "Pushing zip file to zenodo");
+}
+
 sub run_command{
 	my $self = shift;
 	my $cmd = shift;

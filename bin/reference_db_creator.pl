@@ -200,6 +200,19 @@ Default: false
 
 $options{'zip'} = \( my $opt_zip = 0 );
 
+=item [--zenodo-token-file <FILENAME>]
+
+Push resulting output zip file to zenodo using the token stored in
+FILENAME. This option implies --zip (will be set automatically).
+The token file should only contain the zenodo token in the first line.
+Be aware that datasets pushed to zenodo are public and receive a doi
+so they can not simply be deleted.
+Default: false
+
+=cut
+
+$options{'zenodo-token-file=s'} = \( my $opt_zenodo_token_file );
+
 =item [--help]
 
 show help
@@ -232,6 +245,8 @@ pod2usage(1) if ($opt_help);
 pod2usage( -msg => "No marker search string specified. Use --marker-search-string='<SEARCHSTRING>'", -verbose => 0, -exitval => 1, -output => \*STDERR )  unless ( $opt_marker_search_string );
 # Append / to edirect dir if it is not empty and does not already contain a trailing slash
 $opt_edirect_dir .= "/" if($opt_edirect_dir && substr($opt_edirect_dir,-1) ne "/");
+# zip implied by zenodo_token
+$opt_zip = 1 if($opt_zenodo_token_file);
 
 # init a root logger in exec mode
 Log::Log4perl->init(
@@ -260,7 +275,8 @@ my $reference_db_creator = ReferenceDbCreator->new({
     'krona_bin' => $opt_krona_bin,
     'seqfilter_bin' => $opt_seqfilter_bin,
     'dispr_bin' => $opt_dispr_bin,
-    'primer_file' => $opt_primer_file
+    'primer_file' => $opt_primer_file,
+    'zenodo_token_file' => $opt_zenodo_token_file
 });
 $L->info(join(" ", "Call:", $0, @origARGV));
 $reference_db_creator->search_ncbi();
@@ -274,6 +290,7 @@ $reference_db_creator->combine_filtered_and_raw_sequences();
 $reference_db_creator->create_krona_summary();
 $reference_db_creator->add_citation_file();
 $reference_db_creator->zip_output() if($opt_zip);
+$reference_db_creator->push_to_zenodo() if($opt_zenodo_token_file);
 
 sub logfile{
 	return "$opt_outdir/reference_db_creator.log";

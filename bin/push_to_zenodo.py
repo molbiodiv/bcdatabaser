@@ -14,10 +14,18 @@ headers = {"Content-Type": "application/json"}
 
 r = requests.post("https://sandbox.zenodo.org/api/deposit/depositions", params={'access_token': zenodo_token}, json={}, headers=headers)
 deposition_id = r.json()['id']
+bucket_url = r.json()['links']['bucket']
+#print("Record creation:")
+#print(r.json())
 
 data = {'filename': filename}
 files = {'file': open(filename, 'rb')}
-r = requests.post("https://sandbox.zenodo.org/api/deposit/depositions/%s/files" % deposition_id, params={'access_token': zenodo_token}, data=data, files=files)
+r = requests.put("%s/%s" % (bucket_url,filename), params={'access_token': zenodo_token}, data=open(filename, 'rb'), headers={
+    "Accept":"application/json",
+    "Content-Type":"application/octet-stream"
+})
+#print("File upload:")
+#print(r.json())
 
 data = {
     'metadata': {

@@ -56,5 +56,22 @@ data = {
     }
 }
 r = requests.put('https://sandbox.zenodo.org/api/deposit/depositions/%s' % deposition_id, params={'access_token': zenodo_token}, data=json.dumps(data), headers=headers)
+#print("Metadata upload:")
+#print(r.json())
 r = requests.post("https://sandbox.zenodo.org/api/deposit/depositions/%s/actions/publish" % deposition_id, params={'access_token': zenodo_token})
-print(r.json())
+#print("Publish:")
+#print(r.json())
+
+file_download = r.json()['files'][0]['links']['download']
+doi = r.json()['doi']
+doi_link = r.json()['links']['doi']
+record_link = r.json()['links']['record']
+badge_link = r.json()['links']['badge']
+
+print("Push to zenodo successful")
+print("zenodo_file_download: {}".format(file_download))
+print("zenodo_doi: {}".format(doi))
+print("zenodo_doi_link: {}".format(doi_link))
+print("zenodo_record_link: {}".format(record_link))
+print("zenodo_badge_link: {}".format(badge_link))
+

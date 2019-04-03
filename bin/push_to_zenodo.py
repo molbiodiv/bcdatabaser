@@ -65,7 +65,7 @@ r = requests.post("https://sandbox.zenodo.org/api/deposit/depositions/%s/actions
 file_download = r.json()['files'][0]['links']['download']
 doi = r.json()['doi']
 doi_link = r.json()['links']['doi']
-record_link = r.json()['links']['record']
+record_link = r.json()['links']['record_html']
 badge_link = r.json()['links']['badge']
 
 print("Push to zenodo successful")

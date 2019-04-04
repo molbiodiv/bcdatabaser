@@ -3,7 +3,7 @@ ARG BRANCH=master
 LABEL maintainer="markus.ankenbrand@uni-wuerzburg.de"
 
 RUN apt-get update \
-&& apt-get install -yq git unzip vim curl wget build-essential liblog-log4perl-perl libgetopt-argvfile-perl libdatetime-format-natural-perl ncbi-entrez-direct libbio-perl-perl \
+&& apt-get install -yq git unzip vim curl wget build-essential liblog-log4perl-perl libgetopt-argvfile-perl libdatetime-format-natural-perl ncbi-entrez-direct libbio-perl-perl libtest-script-perl \
 && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/greatfireball/NCBI-Taxonomy
@@ -28,7 +28,7 @@ RUN ln -s /SeqFilter/bin/SeqFilter /usr/bin/SeqFilter
 
 COPY docker/whoami /usr/local/bin/whoami
 
-COPY . /metabDB
+COPY . /bcdatabaser
 
 WORKDIR /data
-ENTRYPOINT ["perl", "/metabDB/bin/bcdatabaser.pl"]
+ENTRYPOINT ["perl", "/bcdatabaser/bin/bcdatabaser.pl"]

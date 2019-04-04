@@ -13,6 +13,7 @@ stdenv.mkDerivation {
     TestScript
     GetoptArgvFile
     DateTimeFormatNatural
+    Log4Perl
     perl
   ];
   shellHook = ''

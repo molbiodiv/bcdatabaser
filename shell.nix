@@ -8,7 +8,7 @@ let GetoptArgvFile = buildPerlPackage rec {
 };
 in
 stdenv.mkDerivation {
-  name = "reference_db_creator";
+  name = "bcdatabaser";
   buildInputs = with perlPackages; [
     TestScript
     GetoptArgvFile

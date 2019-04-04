@@ -1,4 +1,4 @@
-package ReferenceDbCreator;
+package BCdatabaser;
 
 use Log::Log4perl qw(:no_extra_logdie_message);
 use File::Path qw(make_path);

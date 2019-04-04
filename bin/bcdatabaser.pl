@@ -7,13 +7,13 @@ use lib "$FindBin::RealBin/../lib";
 use Log::Log4perl qw(:no_extra_logdie_message);
 use Getopt::Long;
 use Getopt::ArgvFile;
-use ReferenceDbCreator;
+use BCdatabaser;
 
 my %options;
 
 =head1 NAME
 
-reference_db_creator.pl
+bcdatabaser.pl
 
 =head1 DESCRIPTION
 
@@ -21,7 +21,7 @@ A pipeline to create reference databases for arbitrary markers and taxonomic gro
 
 =head1 USAGE
 
-  $ reference_db_creator.pl [@configfile] --marker-search-string="<SEARCHSTRING>" [options]
+  $ bcdatabaser.pl [@configfile] --marker-search-string="<SEARCHSTRING>" [options]
 
 =head1 OPTIONS
 
@@ -46,11 +46,11 @@ $options{'marker-search-string|m=s'} = \( my $opt_marker_search_string );
 
 =item [--outdir <STRING>]
 
-output directory for the generated output files (default: reference_db_creator)
+output directory for the generated output files (default: bcdatabaser)
 
 =cut
 
-$options{'outdir=s'} = \( my $opt_outdir="reference_db_creator" );
+$options{'outdir=s'} = \( my $opt_outdir="bcdatabaser" );
 
 =item [--taxonomic-range <SCINAME>]
 
@@ -223,7 +223,7 @@ $options{'help|h|?'} = \( my $opt_help );
 
 =item [--version]
 
-show version number of reference_db_creator and exit
+show version number of bcdatabaser and exit
 
 =cut
 
@@ -238,7 +238,7 @@ $options{'version'} = \( my $opt_version );
 my @origARGV = @ARGV;
 GetOptions(%options) or pod2usage(1);
 if($opt_version){
-    print "reference_db_creator version: ".$bcgTree::VERSION."\n";
+    print "bcdatabaser version: ".$bcgTree::VERSION."\n";
     exit 0;
 }
 pod2usage(1) if ($opt_help);
@@ -261,7 +261,7 @@ Log::Log4perl->init(
 
 my $L = Log::Log4perl::get_logger();
 
-my $reference_db_creator = ReferenceDbCreator->new({
+my $bcdatabaser = BCdatabaser->new({
 	'marker_search_string' => $opt_marker_search_string,
     'outdir' => $opt_outdir,
     'edirect_dir' => $opt_edirect_dir,
@@ -279,21 +279,21 @@ my $reference_db_creator = ReferenceDbCreator->new({
     'zenodo_token_file' => $opt_zenodo_token_file
 });
 $L->info(join(" ", "Call:", $0, @origARGV));
-$reference_db_creator->search_ncbi();
-$reference_db_creator->limit_seqs_per_taxon();
-$reference_db_creator->download_sequences();
-$reference_db_creator->add_taxonomy_to_fasta();
-$reference_db_creator->filter_and_orient_by_primers();
-$reference_db_creator->combine_filtered_and_raw_sequences();
+$bcdatabaser->search_ncbi();
+$bcdatabaser->limit_seqs_per_taxon();
+$bcdatabaser->download_sequences();
+$bcdatabaser->add_taxonomy_to_fasta();
+$bcdatabaser->filter_and_orient_by_primers();
+$bcdatabaser->combine_filtered_and_raw_sequences();
 # TODO #10
-#$reference_db_creator->write_summary_statistics();
-$reference_db_creator->create_krona_summary();
-$reference_db_creator->add_citation_file();
-$reference_db_creator->zip_output() if($opt_zip);
-$reference_db_creator->push_to_zenodo() if($opt_zenodo_token_file);
+#$bcdatabaser->write_summary_statistics();
+$bcdatabaser->create_krona_summary();
+$bcdatabaser->add_citation_file();
+$bcdatabaser->zip_output() if($opt_zip);
+$bcdatabaser->push_to_zenodo() if($opt_zenodo_token_file);
 
 sub logfile{
-	return "$opt_outdir/reference_db_creator.log";
+	return "$opt_outdir/bcdatabaser.log";
 }
 
 __END__

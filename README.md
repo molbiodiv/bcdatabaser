@@ -54,7 +54,7 @@ Pull the container from DockerHub and you are ready to go
 docker pull iimog/metabdb_dev
 ```
 
-The default command of this container is the `reference_db_creator.pl` script so you can execute this command.
+The default command of this container is the `bcdatabaser.pl` script so you can execute this command.
 ```bash
 docker run --rm iimog/metabdb_dev --help
 ```
@@ -103,7 +103,7 @@ This created a folder `its2.bellis.full.2018-11-12` in your current working dire
  - **taxonomy.krona.html**: Krona chart of the taxa in the resulting database
  - **list.txt**: list of accessions and taxids downloaded
  - **sequences.fa**: the raw sequence download
- - **reference_db_creator.log**: log file with all the messages printed to stdout
+ - **bcdatabaser.log**: log file with all the messages printed to stdout
  - **CITATION**: info on how to cite this pipeline
 
 Advance example (ITS2 sequences for a custom species list with trimming using dispr):
@@ -125,7 +125,7 @@ This creates a folder ` ` in your current working directory with the following a
 
 ```
 Usage:
-      $ reference_db_creator.pl [@configfile] --marker-search-string="<SEARCHSTRING>" [options]
+      $ bcdatabaser.pl [@configfile] --marker-search-string="<SEARCHSTRING>" [options]
 
 Options:
     [@configfile]            Optional path to a configfile with @ as prefix.
@@ -140,7 +140,7 @@ Options:
                              to the NCBI search
 
     [--outdir <STRING>]      output directory for the generated output files
-                             (default: reference_db_creator)
+                             (default: bcdatabaser)
 
     [--taxonomic-range <SCINAME>]
                              Scientific (or common) name of the taxon all
@@ -224,7 +224,7 @@ Options:
 
     [--help]                 show help
 
-    [--version]              show version number of reference_db_creator and
+    [--version]              show version number of bcdatabaser and
                              exit
 ```
  

@@ -31,4 +31,4 @@ COPY docker/whoami /usr/local/bin/whoami
 COPY . /metabDB
 
 WORKDIR /data
-ENTRYPOINT ["perl", "/metabDB/bin/reference_db_creator.pl"]
+ENTRYPOINT ["perl", "/metabDB/bin/bcdatabaser.pl"]

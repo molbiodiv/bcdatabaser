@@ -322,8 +322,18 @@ sub zip_output{
 sub push_to_zenodo{
 	my $self = shift;
 	my $outdir = $self->{outdir};
+	my $descFile = $outdir."descFile";
+	open DF, ">$descFile" or die "Can not open zenodo description file for writing: $descFile\n$!";
+	print DF "Parameters:<ul>\n";
+	print DF "<li>--marker-search-string ".$self->{marker_search_string}."</li>\n";
+	print DF "<li>--taxonomic-range ".$self->{taxonomic_range}."</li>\n" if($self->{taxonomic_range});
+	print DF "<li>--sequence-length-filter ".$self->{sequence_length_filter}."</li>\n" if($self->{sequence_length_filter});
+	print DF "<li>--sequences-per-taxon ".$self->{seqs_per_taxon}."</li>\n" if($self->{seqs_per_taxon});
+	print DF "</ul>";
+	close DF or die "Can not close zenodo description file $descFile\n$!";
 	my $zenodo_token_file = $self->{zenodo_token_file};
-	$self->run_command("python $FindBin::RealBin/push_to_zenodo.py ".'$('."cat $zenodo_token_file) $outdir.zip", "Pushing zip file to zenodo");
+	$self->run_command("python $FindBin::RealBin/push_to_zenodo.py ".'$('."cat $zenodo_token_file) $outdir.zip $descFile", "Pushing zip file to zenodo");
+	unlink($descFile);
 }
 
 sub run_command{

@@ -4,12 +4,13 @@ import requests
 import json
 import sys
 
-if len(sys.argv) < 3:
-    print("USAGE: push_result_to_zenodo.py <zenodo_token> <filename>")
+if len(sys.argv) < 4:
+    print("USAGE: push_result_to_zenodo.py <zenodo_token> <filename> <descFile>")
     sys.exit(1)
 
 zenodo_token = sys.argv[1]
 filename = sys.argv[2]
+descFile = sys.argv[3]
 headers = {"Content-Type": "application/json"}
 
 r = requests.post("https://sandbox.zenodo.org/api/deposit/depositions", params={'access_token': zenodo_token}, json={}, headers=headers)
@@ -27,6 +28,9 @@ r = requests.put("%s/%s" % (bucket_url,filename), params={'access_token': zenodo
 #print("File upload:")
 #print(r.json())
 
+with open(descFile, 'r') as file:
+    description = file.read()
+
 data = {
     'metadata': {
         'title': 'BCdatabaser - '+filename,
@@ -40,7 +44,7 @@ data = {
             {'name': 'Ankenbrand, Markus J.', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany', 'orcid': '0000-0002-6620-807X'}
         ],
         # TODO use real parameters
-        'description':"Parameters: <ul><li>--marker-search-string (ITS2 OR 'internal transcribed spacer 2')</li><li>--taxonomic-range Bellis</li><li>--sequences-per-taxon 2</li>",
+        'description': description,
         'notes': 'This dataset was automatically created with data from NCBI using the BCdatabaser tool',
         'keywords':['BCdatabaser', 'barcoding', 'ecology', 'database'],
         'references': [

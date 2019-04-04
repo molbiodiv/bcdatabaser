@@ -2,6 +2,7 @@ package BCdatabaser;
 
 use Log::Log4perl qw(:no_extra_logdie_message);
 use File::Path qw(make_path);
+use File::Copy;
 use NCBI::Taxonomy;
 use FindBin;
 
@@ -224,6 +225,7 @@ sub get_taxa_filter_string_from_taxfile{
 		push(@taxa, $taxon);
 	}
 	close IN or $L->logdie("$!");
+	copy($taxa_list, $self->{outdir}."/taxa_list.txt");
 	return "" unless(@taxa);
 	return " AND (".join(" OR ", @taxa).")";
 }

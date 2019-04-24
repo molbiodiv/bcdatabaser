@@ -215,14 +215,18 @@ sub get_taxa_filter_string_from_taxfile{
 	return "" unless($taxa_list);
 	my $taxa_filter_string = "";
 	my @taxa = ();
+	my @failed_taxa = ();
 	open IN, "<$taxa_list" or $L->logdie("$!");
 	while(<IN>){
 		chomp;
 		unless($self->is_valid_tax_string($_)){
-			$L->logdie("Error: an entry in the --taxa-list file is not a valid tax string: ".$_);
+			push(@failed_taxa, $_);
 		}
 		my $taxon = $_."[ORGN]";
 		push(@taxa, $taxon);
+	}
+	if(@failed_taxa){
+		$L->logdie("Error: at least one entry in the --taxa-list file is not a valid tax string: ".join(", ",@failed_taxa));
 	}
 	close IN or $L->logdie("$!");
 	copy($taxa_list, $self->{outdir}."/taxa_list.txt");

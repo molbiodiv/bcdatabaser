@@ -285,8 +285,7 @@ $bcdatabaser->download_sequences();
 $bcdatabaser->add_taxonomy_to_fasta();
 $bcdatabaser->filter_and_orient_by_primers();
 $bcdatabaser->combine_filtered_and_raw_sequences();
-# TODO #10
-#$bcdatabaser->write_summary_statistics();
+$bcdatabaser->write_summary_statistics();
 $bcdatabaser->create_krona_summary();
 $bcdatabaser->add_citation_file();
 $bcdatabaser->zip_output() if($opt_zip);

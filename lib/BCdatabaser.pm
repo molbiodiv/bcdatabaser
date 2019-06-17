@@ -312,6 +312,15 @@ sub create_krona_summary{
 	$self->run_command($cmd, $msg);
 }
 
+sub write_summary_statistics{
+	my $self = shift;
+	my $outdir = $self->{outdir};
+	my $num_seq = qx(wc -l $outdir/list.filtered.txt);
+	my $num_taxa = qx(cut -f 2 $outdir/list.filtered.txt | sort -u | wc -l);
+	$L->info("STAT\tnumber_of_sequences\t$num_seq");
+	$L->info("STAT\tnumber_of_taxa\t$num_taxa");
+}
+
 sub add_citation_file{
 	my $self = shift;
 	my $outdir = $self->{outdir};

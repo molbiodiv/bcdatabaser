@@ -315,7 +315,7 @@ sub create_krona_summary{
 sub write_summary_statistics{
 	my $self = shift;
 	my $outdir = $self->{outdir};
-	my $num_seq = qx(wc -l $outdir/list.filtered.txt);
+	my $num_seq = qx(cat $outdir/list.filtered.txt | wc -l);
 	my $num_taxa = qx(cut -f 2 $outdir/list.filtered.txt | sort -u | wc -l);
 	$L->info("STAT\tnumber_of_sequences\t$num_seq");
 	$L->info("STAT\tnumber_of_taxa\t$num_taxa");

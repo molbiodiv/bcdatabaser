@@ -235,6 +235,10 @@ Options:
  - list and download existing datasets
  - create new datasets on the server
 
+## Logo
+The current logo is designed by [@mirzazulfan](https://github.com/mirzazulfan).
+Thanks a lot Mirza!
+
 ## LICENSE
 
 This software is licensed under [MIT](./LICENSE). Be aware that the libraries and external programs are licensed separately (possibly under different licenses).

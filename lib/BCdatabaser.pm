@@ -73,7 +73,7 @@ sub search_ncbi{
 	my $seqlen_filter = $self->{sequence_length_filter};
 	$full_search_string .= " AND $seqlen_filter\[SLEN]" if($seqlen_filter);
 	# exclud EST and GSS data
-	$full_search_string .= " NOT gbdiv est[prop] NOT gbdiv gss[prop]";
+	$full_search_string .= " NOT gbdiv est[prop] NOT gbdiv gss[prop] NOT patent NOT environmental NOT unverified";
 	$L->info("Full search string: ".$full_search_string);
 	my $cmd = $edirect_dir."esearch -db nuccore -query \"$full_search_string\" | ".$edirect_dir."efetch -format docsum | ".$edirect_dir."xtract -pattern DocumentSummary -element Caption,TaxId,Slen > $outdir/list.txt";
 	$self->run_command($cmd, "Run search against NCBI");

@@ -238,6 +238,7 @@ Options:
 ## Logo
 The current logo is designed by [@mirzazulfan](https://github.com/mirzazulfan).
 Thanks a lot Mirza!
+![Logo](logo/512px.png)
 
 ## LICENSE
 

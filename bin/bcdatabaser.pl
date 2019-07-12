@@ -115,12 +115,12 @@ $options{'sequence-length-filter=s'} = \( my $opt_sequence_length_filter="" );
 
 Number of sequences to download for each distinct NCBI taxid.
 If there are more sequences for a taxid the longest ones are kept.
-Default: 3
+Default: 9
 Example: --sequences-per-taxon 1
 
 =cut
 
-$options{'sequences-per-taxon=i'} = \( my $opt_seqs_per_taxon=3 );
+$options{'sequences-per-taxon=i'} = \( my $opt_seqs_per_taxon=9 );
 
 =item [--edirect-dir <STRING>]
 

@@ -13,7 +13,7 @@ filename = sys.argv[2]
 descFile = sys.argv[3]
 headers = {"Content-Type": "application/json"}
 
-r = requests.post("https://sandbox.zenodo.org/api/deposit/depositions", params={'access_token': zenodo_token}, json={}, headers=headers)
+r = requests.post("https://zenodo.org/api/deposit/depositions", params={'access_token': zenodo_token}, json={}, headers=headers)
 deposition_id = r.json()['id']
 bucket_url = r.json()['links']['bucket']
 #print("Record creation:")
@@ -43,7 +43,6 @@ data = {
             {'name': 'Gemeinholzer, Birgit', 'affiliation': 'Systematic Botany, Justus Liebig Universität Giessen, Germany'},
             {'name': 'Ankenbrand, Markus J.', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany', 'orcid': '0000-0002-6620-807X'}
         ],
-        # TODO use real parameters
         'description': description,
         'notes': 'This dataset was automatically created with data from NCBI using the BCdatabaser tool',
         'keywords':['BCdatabaser', 'barcoding', 'ecology', 'database'],
@@ -59,10 +58,10 @@ data = {
         'version': '0.1.0'
     }
 }
-r = requests.put('https://sandbox.zenodo.org/api/deposit/depositions/%s' % deposition_id, params={'access_token': zenodo_token}, data=json.dumps(data), headers=headers)
+r = requests.put('https://zenodo.org/api/deposit/depositions/%s' % deposition_id, params={'access_token': zenodo_token}, data=json.dumps(data), headers=headers)
 #print("Metadata upload:")
 #print(r.json())
-r = requests.post("https://sandbox.zenodo.org/api/deposit/depositions/%s/actions/publish" % deposition_id, params={'access_token': zenodo_token})
+r = requests.post("https://zenodo.org/api/deposit/depositions/%s/actions/publish" % deposition_id, params={'access_token': zenodo_token})
 #print("Publish:")
 #print(r.json())
 

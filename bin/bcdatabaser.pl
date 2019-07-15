@@ -238,7 +238,7 @@ $options{'version'} = \( my $opt_version );
 my @origARGV = @ARGV;
 GetOptions(%options) or pod2usage(1);
 if($opt_version){
-    print "bcdatabaser version: ".$bcgTree::VERSION."\n";
+    print "bcdatabaser version: ".$BCdatabaser::VERSION."\n";
     exit 0;
 }
 pod2usage(1) if ($opt_help);

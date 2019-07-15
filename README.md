@@ -1,9 +1,15 @@
-# Reference DB Creator
+# BCdatabaser
 
 ## Introduction
 
-The Reference DB Creator is a pipeline to create reference databases for arbitrary markers and taxonomic groups from NCBI data.
+The Reference DB Creator (BCdatabaser) is a pipeline to create reference databases for arbitrary markers and taxonomic groups from NCBI data.
 It can optionally be used to trim and orient the sequences and train taxonomic classifiers.
+Please cite our preprint [![DOI](https://img.shields.io/badge/DOI-10.32942%2Fosf.io%2Fcmfu2-blue.svg)](https://doi.org/10.32942/osf.io/cmfu2) in addition to the created dataset if you use this pipeline. Also consider citing the tools used in this pipeline as outlined in [CITATION](./CITATION).
+
+
+## Web Interface
+
+A user friendly web interface with limited options is available at https://bcdatabaser.molecular.eco
 
 ## Overview
 
@@ -16,7 +22,7 @@ Optional
  - Taxonlist
  - Length range
  - Degenerate primers (trimming/orientation)
- - HMMs (trimming/orientation) - planned but not yet implemented
+ - HMMs (trimming/orientation) - not yet implemented
 
 ### Output
 Recommended naming scheme: `<Marker>.<Taxonomic Group>.<country code>.<date>`
@@ -31,7 +37,7 @@ Additional:
  - Check dependencies
  - Check inputs
  - Download sequences
- - optional: trim/orient via HMM or primers
+ - optional: trim/orient via primers (or HMM in the future)
  - Add taxonomy
  - Write reports
 
@@ -45,25 +51,24 @@ As it can be difficult to download and setup all the dependencies we provide a r
 We recommend using this container (it should also work with singularity).
 However, if you want or need a native installation please see the websites of the modules and tools
 for installation instructions for your platform and refer to the steps in the [Dockerfile](./Dockerfile).
-If you encounter any problems please open an [issue](https://github.com/molbiodiv/metabDB/issues) and we will do our best to help.
+If you encounter any problems please open an [issue](https://github.com/molbiodiv/bcdatabaser/issues) and we will do our best to help.
 
 ### Docker
 Pull the container from DockerHub and you are ready to go
 
 ```bash
-docker pull iimog/metabdb_dev
+docker pull iimog/bcdatabaser
 ```
 
 The default command of this container is the `bcdatabaser.pl` script so you can execute this command.
 ```bash
-docker run --rm iimog/metabdb_dev --help
+docker run --rm iimog/bcdatabaser --help
 ```
 
 In order to use data from your local directory inside the container and operate as your current user (instead of root):
 ```bash
-docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev # arguments
+docker run -u $UID:$GID -v $PWD:/data --rm iimog/bcdatabaser # arguments
 ```
-If you see this message: `whoami: cannot find name for user ID` apear in the log, you can ignore it. This is because your user is not known to the docker container but this will not cause any problems.
 
 You're all set, skip to the [Examples](#examples) section to get started.
 
@@ -91,7 +96,7 @@ For Singularity or local installations the commands have to be adjusted accordin
 
 Simple example (ITS2 sequences for the genus Bellis):
 ```
-docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev\
+docker run -u $UID:$GID -v $PWD:/data --rm iimog/bcdatabaser\
  --outdir its2.bellis.full.2018-11-12\
  --marker-search-string "(ITS2 OR internal transcribed spacer 2)"\
  --taxonomic-range Bellis\
@@ -108,7 +113,7 @@ This created a folder `its2.bellis.full.2018-11-12` in your current working dire
 
 Advance example (ITS2 sequences for a custom species list with trimming using dispr):
 ```
-docker run -u $UID:$GID -v $PWD:/data --rm iimog/metabdb_dev\
+docker run -u $UID:$GID -v $PWD:/data --rm iimog/bcdatabaser\
  --outdir its2.viridiplantae.custom.2018-11-12\
  --marker-search-string "(ITS2 OR internal transcribed spacer 2)"\
  --taxonomic-range Viridiplantae\
@@ -158,6 +163,24 @@ Options:
                              restriction) Example: --taxa-list
                              plants_in_germany.txt
 
+    [--check-tax-names]      If this option is set all taxon names provided
+                             by the user (--taxonomic-range and entries in
+                             the --taxa-list file) are checked against the
+                             names.dmp file from NCBI The program stops with
+                             an error if any species name is not listed in
+                             names.dmp. Set the path to the names.dmp file
+                             via --names-dmp-path Default: false
+
+    [--names-dmp-path <PATH>]
+                             Path to the NCBI taxonomy names.dmp file to
+                             check taxonomic names. Only relevant if
+                             --check-tax-names is set. The default value is
+                             suitable for use with the docker container. It
+                             is the same file used by NCBI::Taxonomy to
+                             assign the tax strings. Default:
+                             /NCBI-Taxonomy/names.dmp Example:
+                             --names-dmp-path $HOME/ncbi/names.dmp
+
     [--sequence-length-filter <SLEN>]
                              Sequence length filter for search at NCBI
                              (single number or colon separated range). This
@@ -168,9 +191,10 @@ Options:
 
     [--sequences-per-taxon <INTEGER>]
                              Number of sequences to download for each
-                             distinct NCBI taxid. If there are more sequences
-                             for a taxid the longest ones are kept.
-                             Default: 3 Example: --sequences-per-taxon 1
+                             distinct NCBI taxid. If there are more
+                             sequences for a taxid the longest ones are
+                             kept. Default: 9 Example: --sequences-per-taxon
+                             1
 
     [--edirect-dir <STRING>] directory containing the entrez direct
                              utilities (default: empty, look for programs in
@@ -220,21 +244,28 @@ Options:
                              If set the output folder will be zipped and
                              deleted(!). So please be careful when using
                              --zip and only use it with a dedicated
-                             subfolder specified with --outdir Default=false
+                             subfolder specified with --outdir Default:
+                             false
+
+    [--zenodo-token-file <FILENAME>]
+                             Push resulting output zip file to zenodo using
+                             the token stored in FILENAME. This option
+                             implies --zip (will be set automatically). The
+                             token file should only contain the zenodo token
+                             in the first line. Be aware that datasets
+                             pushed to zenodo are public and receive a doi
+                             so they can not simply be deleted. Default:
+                             false
 
     [--help]                 show help
 
-    [--version]              show version number of bcdatabaser and
-                             exit
+    [--version]              show version number of bcdatabaser and exit
 ```
  
-## Dataset Upload - planned but not yet implemented
- - via zenodo with fixed metadata (referencing our doi)
+## Dataset Upload
+Automated dataset upload to zenodo is possible. You have to supply a file containing the zenodo token to bcdatabaser.
+The dataset is uploaded in the name of the owner of that token. If that's you, you are able to modify metadata but not to delete the record.
  
-## Web Interface - planned but not yet implemented
- - list and download existing datasets
- - create new datasets on the server
-
 ## Logo
 The current logo is designed by [@mirzazulfan](https://github.com/mirzazulfan).
 Thanks a lot Mirza!
@@ -243,3 +274,6 @@ Thanks a lot Mirza!
 ## LICENSE
 
 This software is licensed under [MIT](./LICENSE). Be aware that the libraries and external programs are licensed separately (possibly under different licenses).
+
+## Changes
+ - 1.0.0 <2019-07-15> Initial stable release

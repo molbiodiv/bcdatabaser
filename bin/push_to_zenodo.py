@@ -55,8 +55,8 @@ data = {
             'Krona: Ondov BD, Bergman NH, and Phillippy AM. Interactive metagenomic visualization in a Web browser. BMC Bioinformatics. 2011 Sep 30; 12(1):385.'
         ],
         'related_identifiers': [
-            {'relation': 'cites', 'identifier':'https://doi.org/10.32942/osf.io/cmfu2'}
-            {'relation': 'cites', 'identifier':'https://doi.org/10.5281/zenodo.1462861'}
+            {'relation': 'cites', 'identifier':'https://doi.org/10.32942/osf.io/cmfu2'},
+            {'relation': 'cites', 'identifier':'https://doi.org/10.5281/zenodo.1462861'},
             {'relation': 'cites', 'identifier':'https://doi.org/10.1186/1471-2105-12-385'}
         ],
         'version': '1.0.0'

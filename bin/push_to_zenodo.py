@@ -47,15 +47,19 @@ data = {
         'notes': 'This dataset was automatically created with data from NCBI using the BCdatabaser tool',
         'keywords':['BCdatabaser', 'barcoding', 'ecology', 'database'],
         'references': [
-            'Keller et al. (2019) BCdatabaser: on-the-fly reference database creation for (meta-)barcoding. (in preparation) doi:pending https://github.com/molbiodiv/bcdatabaser',
+            'Keller et al. (2019) BCdatabaser: on-the-fly reference database creation for (meta-)barcoding. EcoEvoRxiv (2019); https://doi.org/10.32942/osf.io/cmfu2 - https://github.com/molbiodiv/bcdatabaser',
             'eutils: Sayers E. E-utilities Quick Start. 2008 Dec 12 [Updated 2018 Oct 24]. In: Entrez Programming Utilities Help [Internet]. Bethesda (MD): National Center for Biotechnology Information (US); 2010-. Available from: https://www.ncbi.nlm.nih.gov/books/NBK25500/',
-            'NCBI::Taxonomy: Förster et al. https://github.com/greatfireball/NCBI-Taxonomy',
+            'NCBI::Taxonomy: Förster et al. https://github.com/greatfireball/NCBI-Taxonomy - Förster F. greatfireball/NCBI-Taxonomy v0.90. Zenodo. 2018 Oct 15; https://doi.org/10.5281/zenodo.1462861',
             'SeqFilter: Hackl et al. https://github.com/BioInf-Wuerzburg/SeqFilter',
             'dispr: Cofield et al. https://github.com/douglasgscofield/dispr',
             'Krona: Ondov BD, Bergman NH, and Phillippy AM. Interactive metagenomic visualization in a Web browser. BMC Bioinformatics. 2011 Sep 30; 12(1):385.'
         ],
-        # TODO use real version
-        'version': '0.1.0'
+        'related_identifiers': [
+            {'relation': 'cites', 'identifier':'https://doi.org/10.32942/osf.io/cmfu2'}
+            {'relation': 'cites', 'identifier':'https://doi.org/10.5281/zenodo.1462861'}
+            {'relation': 'cites', 'identifier':'https://doi.org/10.1186/1471-2105-12-385'}
+        ],
+        'version': '1.0.0'
     }
 }
 r = requests.put('https://zenodo.org/api/deposit/depositions/%s' % deposition_id, params={'access_token': zenodo_token}, data=json.dumps(data), headers=headers)

@@ -95,7 +95,7 @@ sub is_valid_tax_string{
 		$self->{valid_tax_strings} = $valid_tax_strings;
 		close(IN) or die "Can not close file ".$self->{names_dmp_path}." $!";
 	}
-	return exists $valid_tax_strings->{$query};
+	return (exists $valid_tax_strings->{lcfirst($query)} or exists $valid_tax_strings->{ucfirst($query)});
 }
 
 sub limit_seqs_per_taxon{

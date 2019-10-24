@@ -4,16 +4,22 @@ import requests
 import json
 import sys
 
-if len(sys.argv) < 4:
-    print("USAGE: push_result_to_zenodo.py <zenodo_token> <filename> <descFile>")
+# set this variable to switch between production (https://zenodo.org/api/) and sandbox (https://sandbox.zenodo.org/api/)
+zenodo_api_url = "https://sandbox.zenodo.org/api/"
+
+if len(sys.argv) < 6:
+    print("USAGE: push_result_to_zenodo.py <zenodo_token> <filename> <descFile> <creatorName> <creatorOrcid>")
     sys.exit(1)
 
 zenodo_token = sys.argv[1]
 filename = sys.argv[2]
 descFile = sys.argv[3]
+creator_name = sys.argv[4]
+creator_orcid = sys.argv[5]
+
 headers = {"Content-Type": "application/json"}
 
-r = requests.post("https://zenodo.org/api/deposit/depositions", params={'access_token': zenodo_token}, json={}, headers=headers)
+r = requests.post(zenodo_api_url+"deposit/depositions", params={'access_token': zenodo_token}, json={}, headers=headers)
 deposition_id = r.json()['id']
 bucket_url = r.json()['links']['bucket']
 #print("Record creation:")
@@ -36,12 +42,13 @@ data = {
         'title': 'BCdatabaser - '+filename,
         'upload_type': 'dataset',
         'creators': [
-            {'name': 'Keller, Alexander', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany', 'orcid': '0000-0001-5716-3634'},
-            {'name': 'Hohlfeld, Sonja C.Y.', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany'},
-            {'name': 'Kolter, Andreas', 'affiliation': 'Systematic Botany, Justus Liebig Universität Giessen, Germany'},
-            {'name': 'Schultz, Jörg', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany'},
-            {'name': 'Gemeinholzer, Birgit', 'affiliation': 'Systematic Botany, Justus Liebig Universität Giessen, Germany'},
-            {'name': 'Ankenbrand, Markus J.', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany', 'orcid': '0000-0002-6620-807X'}
+            {'name': creator_name, 'orcid': creator_orcid},
+            #{'name': 'Keller, Alexander', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany', 'orcid': '0000-0001-5716-3634'},
+            #{'name': 'Hohlfeld, Sonja C.Y.', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany'},
+            #{'name': 'Kolter, Andreas', 'affiliation': 'Systematic Botany, Justus Liebig Universität Giessen, Germany'},
+            #{'name': 'Schultz, Jörg', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany'},
+            #{'name': 'Gemeinholzer, Birgit', 'affiliation': 'Systematic Botany, Justus Liebig Universität Giessen, Germany'},
+            #{'name': 'Ankenbrand, Markus J.', 'affiliation': 'Center for Computational and Theoretical Biology, University of Würzburg, Germany', 'orcid': '0000-0002-6620-807X'}
         ],
         'description': description,
         'notes': 'This dataset was automatically created with data from NCBI using the BCdatabaser tool',
@@ -62,10 +69,10 @@ data = {
         'version': '1.0.0'
     }
 }
-r = requests.put('https://zenodo.org/api/deposit/depositions/%s' % deposition_id, params={'access_token': zenodo_token}, data=json.dumps(data), headers=headers)
+r = requests.put(zenodo_api_url+'deposit/depositions/%s' % deposition_id, params={'access_token': zenodo_token}, data=json.dumps(data), headers=headers)
 #print("Metadata upload:")
 #print(r.json())
-r = requests.post("https://zenodo.org/api/deposit/depositions/%s/actions/publish" % deposition_id, params={'access_token': zenodo_token})
+r = requests.post(zenodo_api_url+"deposit/depositions/%s/actions/publish" % deposition_id, params={'access_token': zenodo_token})
 #print("Publish:")
 #print(r.json())
 
@@ -81,4 +88,6 @@ print("zenodo_doi: {}".format(doi))
 print("zenodo_doi_link: {}".format(doi_link))
 print("zenodo_record_link: {}".format(record_link))
 print("zenodo_badge_link: {}".format(badge_link))
+print("zenodo_creator_name: {}".format(creator_name))
+print("zenodo_creator_orcid: {}".format(creator_orcid))
 

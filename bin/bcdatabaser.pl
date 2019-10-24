@@ -213,6 +213,24 @@ Default: false
 
 $options{'zenodo-token-file=s'} = \( my $opt_zenodo_token_file );
 
+=item [--zenodo-author-name <STRING>]
+
+Name of the author that created this file.
+Required if --zenodo-token-file is used, otherwise ignored.
+
+=cut
+
+$options{'zenodo-author-name=s'} = \( my $opt_zenodo_author_name );
+
+=item [--zenodo-author-orcid <STRING>]
+
+ORCID iD of the author that created this file.
+Required if --zenodo-token-file is used, otherwise ignored.
+
+=cut
+
+$options{'zenodo-author-orcid=s'} = \( my $opt_zenodo_author_orcid );
+
 =item [--help]
 
 show help
@@ -243,6 +261,7 @@ if($opt_version){
 }
 pod2usage(1) if ($opt_help);
 pod2usage( -msg => "No marker search string specified. Use --marker-search-string='<SEARCHSTRING>'", -verbose => 0, -exitval => 1, -output => \*STDERR )  unless ( $opt_marker_search_string );
+pod2usage( -msg => "Zenodo token file set but author or orcid not specified, use --zenodo-author-name and --zenodo-author-orcid", -verbose => 0, -exitval => 1, -output => \*STDERR )  if ( $opt_zenodo_token_file and (not $opt_zenodo_author_name or not $opt_zenodo_author_orcid) );
 # Append / to edirect dir if it is not empty and does not already contain a trailing slash
 $opt_edirect_dir .= "/" if($opt_edirect_dir && substr($opt_edirect_dir,-1) ne "/");
 # zip implied by zenodo_token
@@ -276,7 +295,9 @@ my $bcdatabaser = BCdatabaser->new({
     'seqfilter_bin' => $opt_seqfilter_bin,
     'dispr_bin' => $opt_dispr_bin,
     'primer_file' => $opt_primer_file,
-    'zenodo_token_file' => $opt_zenodo_token_file
+    'zenodo_token_file' => $opt_zenodo_token_file,
+    'zenodo_author_name' => $opt_zenodo_author_name,
+    'zenodo_author_orcid' => $opt_zenodo_author_orcid
 });
 $L->info(join(" ", "Call:", $0, @origARGV));
 $bcdatabaser->search_ncbi();

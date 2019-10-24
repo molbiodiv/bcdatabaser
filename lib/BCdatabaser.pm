@@ -347,7 +347,9 @@ sub push_to_zenodo{
 	print DF "</ul>";
 	close DF or die "Can not close zenodo description file $descFile\n$!";
 	my $zenodo_token_file = $self->{zenodo_token_file};
-	$self->run_command("python $FindBin::RealBin/push_to_zenodo.py ".'$('."cat $zenodo_token_file) $outdir.zip $descFile", "Pushing zip file to zenodo");
+	my $zenodo_author_name = $self->{zenodo_author_name};
+	my $zenodo_author_orcid = $self->{zenodo_author_orcid};
+	$self->run_command("python $FindBin::RealBin/push_to_zenodo.py ".'$('."cat $zenodo_token_file) $outdir.zip $descFile '$zenodo_author_name' '$zenodo_author_orcid'", "Pushing zip file to zenodo");
 	unlink($descFile);
 }
 

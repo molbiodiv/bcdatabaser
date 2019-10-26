@@ -168,8 +168,20 @@ Options:
                              the --taxa-list file) are checked against the
                              names.dmp file from NCBI The program stops with
                              an error if any species name is not listed in
-                             names.dmp. Set the path to the names.dmp file
-                             via --names-dmp-path Default: false
+                             names.dmp. If --warn-failed-tax-names is set
+                             the program does not stop but prints a warning.
+                             Set the path to the names.dmp file via
+                             --names-dmp-path Default: false
+
+    [--warn-failed-tax-names]
+                             Only used if --check-tax-names is set. Instead
+                             of dying when a tax name in the --tax-list is
+                             unknown these taxa are removed from the search
+                             string and a warning is printed. This means
+                             that your search string does not contain all
+                             taxa in your file so it is important to check
+                             the warning to see which ones were removed.
+                             Default: false
 
     [--names-dmp-path <PATH>]
                              Path to the NCBI taxonomy names.dmp file to
@@ -256,6 +268,16 @@ Options:
                              pushed to zenodo are public and receive a doi
                              so they can not simply be deleted. Default:
                              false
+
+    [--zenodo-author-name <STRING>]
+                             Name of the author that created this file.
+                             Required if --zenodo-token-file is used,
+                             otherwise ignored.
+
+    [--zenodo-author-orcid <STRING>]
+                             ORCID iD of the author that created this file.
+                             Required if --zenodo-token-file is used,
+                             otherwise ignored.
 
     [--help]                 show help
 

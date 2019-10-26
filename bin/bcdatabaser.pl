@@ -80,12 +80,25 @@ $options{'taxa-list=s'} = \( my $opt_taxa_list="" );
 If this option is set all taxon names provided by the user (--taxonomic-range and
 entries in the --taxa-list file) are checked against the names.dmp file from NCBI
 The program stops with an error if any species name is not listed in names.dmp.
+If --warn-failed-tax-names is set the program does not stop but prints a warning.
 Set the path to the names.dmp file via --names-dmp-path
 Default: false
 
 =cut
 
 $options{'check-tax-names'} = \( my $opt_check_tax_names=0 );
+
+=item [--warn-failed-tax-names]
+
+Only used if --check-tax-names is set. Instead of dying when a tax name in the 
+--tax-list is unknown these taxa are removed from the search string and a warning
+is printed. This means that your search string does not contain all taxa in your
+file so it is important to check the warning to see which ones were removed.
+Default: false
+
+=cut
+
+$options{'warn-failed-tax-names'} = \( my $opt_warn_failed_tax_names=0 );
 
 =item [--names-dmp-path <PATH>]
 
@@ -288,6 +301,7 @@ my $bcdatabaser = BCdatabaser->new({
     'taxonomic_range' => $opt_taxonomic_range,
     'taxa_list' => $opt_taxa_list,
     'check_tax_names' => $opt_check_tax_names,
+    'warn_failed_tax_names' => $opt_warn_failed_tax_names,
     'names_dmp_path' => $opt_names_dmp_path,
     'sequence_length_filter' => $opt_sequence_length_filter,
     'seqs_per_taxon' => $opt_seqs_per_taxon,

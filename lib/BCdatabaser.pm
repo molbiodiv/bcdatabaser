@@ -212,6 +212,7 @@ sub add_taxonomy_to_fasta{
 sub get_taxa_filter_string_from_taxfile{
 	my $self = shift;
 	$taxa_list = $self->{taxa_list};
+	$warn_not_die = $self->{warn_failed_tax_names};
 	return "" unless($taxa_list);
 	my $taxa_filter_string = "";
 	my @taxa = ();
@@ -219,14 +220,19 @@ sub get_taxa_filter_string_from_taxfile{
 	open IN, "<$taxa_list" or $L->logdie("$!");
 	while(<IN>){
 		chomp;
-		unless($self->is_valid_tax_string($_)){
+		if($self->is_valid_tax_string($_)){
+			my $taxon = $_."[ORGN]";
+			push(@taxa, $taxon);
+		} else {
 			push(@failed_taxa, $_);
 		}
-		my $taxon = $_."[ORGN]";
-		push(@taxa, $taxon);
 	}
 	if(@failed_taxa){
-		$L->logdie("Error: at least one entry in the --taxa-list file is not a valid tax string: ".join(", ",@failed_taxa));
+		if($warn_not_die){
+			$L->info("Warning: at least one entry in the --taxa-list file is not a valid tax string, they were not added to the search string: ".join(", ",@failed_taxa));
+		} else {
+			$L->logdie("Error: at least one entry in the --taxa-list file is not a valid tax string: ".join(", ",@failed_taxa));
+		}
 	}
 	close IN or $L->logdie("$!");
 	copy($taxa_list, $self->{outdir}."/taxa_list.txt");

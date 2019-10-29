@@ -19,7 +19,7 @@ Databases can be cleaned up with the **Prinseq-lite** tool available here: https
 Execution is as follows: 
 
 ```
-perl $pr -fasta sequences.tax.fa  -ns_max_n 10 -min_len 200 -out_good sequences.tax.corr
+perl $pr -fasta sequences.tax.fa  -ns_max_n 10 -out_good sequences.tax.corr
 ```
 Be aware, the file suffix changes from ```.fa``` to ```.fasta```
 

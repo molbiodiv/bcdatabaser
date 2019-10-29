@@ -8,6 +8,8 @@
 
 ## Adding local references to the database
 
-## Alternative taxonomic lineages.
+## Renaming taxa
+
+## Alternative taxonomic lineages
 
 ## 

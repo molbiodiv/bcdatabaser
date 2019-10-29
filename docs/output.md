@@ -15,6 +15,10 @@
 
 ## Syntax of taxonomy
 
+* SINTAX nomenclature [https://www.drive5.com/usearch/manual/tax_annot.html](https://www.drive5.com/usearch/manual/tax_annot.html)
+* RDP variant
+* Greengenes convention 
+
 ## Visualisation as Krona Charts
 
 ## Additional files

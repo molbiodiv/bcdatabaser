@@ -16,7 +16,6 @@ If you use this software, please cite it as below:
 Keller A., Hohlfeld S., Kolter A., Schultz J., Gemeinholzer B., Ankenbrand M.J.;
 "BCdatabaser: on-the-fly reference database creation for (meta-)barcoding";
 EcoEvoRxiv (2019) https://doi.org/10.32942/osf.io/cmfu2
-https://github.com/molbiodiv/bcdatabaser
 
 Please also cite the software used by this pipeline:
 * NCBI eutils: https://www.ncbi.nlm.nih.gov/books/NBK25500/

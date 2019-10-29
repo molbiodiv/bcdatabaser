@@ -1,4 +1,8 @@
 # Command Line version 
+{:.no_toc}
+
+* TOC list
+{:toc}
 
 ## Installation
 This pipeline consists of a perl script that depends on a number of libraries.

@@ -5,8 +5,8 @@ The Reference DB Creator (BCdatabaser) is a pipeline to create reference databas
 * A user-friendly web interface with limited options is available at [https://bcdatabaser.molecular.eco](https://bcdatabaser.molecular.eco). Login via ORCID is mandatory, created databases will be publicly available and assigned a DOI at Zenodo. 
 * [Command line version](cmd.md)
 * [Parameters and output](parameters.md)
-* [Automated post-processing databases](postprocessing.md)
-* [Manual changes](postprocessing_manual.md) (e.g. adding sequences or modifying taxonomy) 
+* [Automated post-processing of databases](postprocessing.md)
+* [Manual post-processing of databases](postprocessing_manual.md) (e.g. adding sequences or modifying taxonomy) 
 * Examples for usage with classifiers
 * [Public deposition](public_deposition.md)
  

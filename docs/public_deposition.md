@@ -23,6 +23,6 @@ This token can be provided with the parameter ```--zenodo-token-file```.
 For better discoverability, we also recommend to publicly deposit data additionally in one of the INSDC databases. 
 In these databases, the reference database can also be deposited in a bundle with the actual sequencing data for which it was used, for example in a BioProject.
 Further additional metadata can be directly deposited, which allows better findability. 
-* (NCBI)[https://www.ncbi.nlm.nih.gov/bioproject/] 
-* (DDBJ)[http://trace.ddbj.nig.ac.jp/bioproject/index_e.html]
-* (EMBL-EBI)[http://www.ebi.ac.uk/ena/about/formats]
+* [NCBI](https://www.ncbi.nlm.nih.gov/bioproject/)
+* [DDBJ](http://trace.ddbj.nig.ac.jp/bioproject/index_e.html)
+* [EMBL-EBI](http://www.ebi.ac.uk/ena/about/formats)

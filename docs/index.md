@@ -3,8 +3,6 @@
 ## Introduction
 
 The Reference DB Creator (BCdatabaser) is a pipeline to create reference databases for arbitrary markers and taxonomic groups from NCBI data.
-It can optionally be used to trim and orient the sequences and train taxonomic classifiers.
-Please cite our preprint [![DOI](https://img.shields.io/badge/DOI-10.32942%2Fosf.io%2Fcmfu2-blue.svg)](https://doi.org/10.32942/osf.io/cmfu2) in addition to the created dataset if you use this pipeline. Also consider citing the tools used in this pipeline as outlined in [CITATION](../CITATION).
 
 * Web service: A user friendly web interface with limited options is available at https://bcdatabaser.molecular.eco
 * [Command line version](cmd.md)
@@ -12,7 +10,19 @@ Please cite our preprint [![DOI](https://img.shields.io/badge/DOI-10.32942%2Fosf
 * [Automated post-processing databases](postprocessing.md)
 * Manual changes (adding sequences or modifying taxonomy) 
 * Examples for usage with classifiers
-
  
+If you use this software, please cite it as below:
+
+Keller A., Hohlfeld S., Kolter A., Schultz J., Gemeinholzer B., Ankenbrand M.J.;
+"BCdatabaser: on-the-fly reference database creation for (meta-)barcoding";
+EcoEvoRxiv (2019) https://doi.org/10.32942/osf.io/cmfu2
+https://github.com/molbiodiv/bcdatabaser
+
+Please also cite the software used by this pipeline:
+* NCBI eutils: https://www.ncbi.nlm.nih.gov/books/NBK25500/
+*  NCBI::Taxonomy module: https://github.com/greatfireball/NCBI-Taxonomy - Förster F. greatfireball/NCBI-Taxonomy v0.90. Zenodo. 2018 Oct 15; http://doi.org/10.5281/zenodo.1462861
+*  SeqFilter: https://github.com/BioInf-Wuerzburg/SeqFilter
+*  dispr: https://github.com/douglasgscofield/dispr
+*  Krona: https://github.com/marbl/Krona - Ondov BD, Bergman NH, and Phillippy AM. Interactive metagenomic visualization in a Web browser. BMC Bioinformatics. 2011 Sep 30; 12(1):385.
 
  

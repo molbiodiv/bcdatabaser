@@ -7,7 +7,7 @@ The Reference DB Creator (BCdatabaser) is a pipeline to create reference databas
 * [Parameters and output](parameters.md)
 * [Automated post-processing of databases](postprocessing.md)
 * [Manual post-processing of databases](postprocessing_manual.md) (e.g. adding sequences or modifying taxonomy) 
-* Examples for usage with classifiers
+* [Usage with classifiers](classification.md)
 * [Public deposition](public_deposition.md)
  
 **If you use this software, please cite it as below:**

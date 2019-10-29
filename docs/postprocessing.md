@@ -46,7 +46,7 @@ vsearch --uchime_denovo sequences.tax.fa --nonchimeras sequences.tax.nochimera.f
 
 ## Dereplication 
 
-Sequences may still include duplicates in the database. This should in most cases not harm the classification procedure, yet might result in longer calculations. This may be circumvent by using VSEARCH for dereplication, but be aware that this might result in unwanted results when two closely related taxa share exactly the complete identical marker sequence: 
+Sequences may still include duplicates in the database. This should in most cases not harm the classification procedure, yet might result in longer calculations. This may be circumvent by using VSEARCH for dereplication, but be aware that this might result in unwanted results when two closely related taxa share exactly the complete identical marker sequence (e.g. conserved markers): 
 
 ```sh
 vsearch --derep_fulllength sequences.tax.fa --output sequences.tax.unique.fa

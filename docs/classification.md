@@ -54,3 +54,34 @@ Also direct local alignments can be applied immediatly through BLAST:
 ```sh
 blastn -query sequence-of-interest.fa -max_target_seqs 1 -outfmt 6 -subject sequences.tax.fa > tabular.out
 ```
+
+## RDP classifier
+
+The RDP classifier uses a similar, yet not completely consistent syntax with the tools above. Therefore slight modifications have to be applied:
+
+BCdatabaser/tools above fasta syntax: 
+```
+>LS453445;tax=k:Metazoa,p:Arthropoda,c:Insecta,o:Coleoptera,f:Carabidae,g:Molops,s:Molops_piceus;
+ACATCCTGAAGTTTATATTTTAATTCTCCCAGGATTTGGAATAATTTCCCATATTATTAGACAAGAAAGA
+GGTAAAAAAGAAACATTTGGTTCATTAGGAATAATTTATGCTATATTAGCTATTGGTTTATTAGGATTTG
+TAGTATGAGCTCATCATATATTTACAGTAGGAATAGATGTGGATACTCGAGCTTATTTTACATCAGCTAC
+TATAATTATTGCTGTTCCTACAGGAATTAAGATCTTTTCTTGGCTTGCAACTTTACACGGAACTCAGTTA
+```
+
+RDP fasta syntax:
+```
+>LS453445	Metazoa;Arthropoda;Insecta;Coleoptera;Carabidae;Molops;Molops_piceus
+ACATCCTGAAGTTTATATTTTAATTCTCCCAGGATTTGGAATAATTTCCCATATTATTAGACAAGAAAGA
+GGTAAAAAAGAAACATTTGGTTCATTAGGAATAATTTATGCTATATTAGCTATTGGTTTATTAGGATTTG
+TAGTATGAGCTCATCATATATTTACAGTAGGAATAGATGTGGATACTCGAGCTTATTTTACATCAGCTAC
+TATAATTATTGCTGTTCCTACAGGAATTAAGATCTTTTCTTGGCTTGCAACTTTACACGGAACTCAGTTA
+```
+
+To format this accordingly, the following regular expression can be applied: 
+
+```sh
+sed -e "s/;tax=k:/\t/" -e "s/,[^:]:/;/" sequences.tax.fa  > sequences.tax.rdp.fa 
+
+
+
+

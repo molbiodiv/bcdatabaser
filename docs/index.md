@@ -14,7 +14,7 @@ In a nutshell it
 * A user-friendly web interface with limited options is available at [https://bcdatabaser.molecular.eco](https://bcdatabaser.molecular.eco). Login via ORCID is mandatory, created databases will be publicly available and assigned a DOI at Zenodo. 
 * [Command line version](cmd.md)
 * [Parameters](parameters.md)
-* [Search details](search.md)
+* [Search details](searches.md)
 * [Output and file syntax](output.md)
 
 ## Further documentation 

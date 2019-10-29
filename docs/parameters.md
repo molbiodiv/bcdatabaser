@@ -21,7 +21,7 @@ In the webinterface some parameters are however fixed to most common parameters.
  - HMMs (trimming/orientation) - not yet implemented
  - Maximum number of sequences per taxon (*Web interface: fixed 9*)
  
-## Output
+## Output [ToDO]
 Recommended naming scheme: `<Marker>.<Taxonomic Group>.<country code>.<date>`
 
 Basic:

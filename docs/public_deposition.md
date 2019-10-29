@@ -1,4 +1,6 @@
-# Public deposition of BCdatabaser created datasets
+[back to the index](./index.md)
+
+# Public deposition of datasets
 
 # Full dataset DOI assignment
 

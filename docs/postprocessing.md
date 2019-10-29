@@ -8,7 +8,8 @@
 
 ## Issues with taxon names including special characters
 
-For a variety of downstream classifiers, names that include special characters may pose a problem. In this case you can execute a regular expression and substitution on your database file with the following command to replace unwanted characters:
+For a variety of downstream classifiers, names that include special characters may pose a problem. In this case you can execute a regular expression and substitution on your database file with the following command to replace unwanted characters. This regular expression covers the current issues we faced, feel free to open an issue [here](https://github.com/molbiodiv/bcdatabaser/issues) in case you encounter others. 
+
 Change into database directory where the file ```sequences.tax.fa```  is located and execute:
 ```sh
 sed -i .bak -e "s/,\(.[^:]\)/_\1/" -e "s/,_/_/g" -e "s/;$//"  sequences.tax.fa

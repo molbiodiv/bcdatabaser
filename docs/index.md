@@ -3,19 +3,21 @@
 The Reference DB Creator (BCdatabaser) is a pipeline to create reference databases for arbitrary markers and taxonomic groups from NCBI data.
 
 In a nutshell it
-* check inputs for available data in NCBI
+* check inputs for available data at NCBI
 *  downloads sequences according to parameters 
 * *optional:* trims/orients via primers
 *  adds taxonomy to sequences
 *  write reports
 *  *web interface or optionally on command line:* deposits data publicly at Zenodo.org and assigns a citable DOI
 
-## Documentation 
+## Basic documentation 
 * A user-friendly web interface with limited options is available at [https://bcdatabaser.molecular.eco](https://bcdatabaser.molecular.eco). Login via ORCID is mandatory, created databases will be publicly available and assigned a DOI at Zenodo. 
 * [Command line version](cmd.md)
 * [Parameters](parameters.md)
+* [Search details](search.md)
 * [Output and file syntax](output.md)
 
+## Further documentation 
 * [Automated post-processing of databases](postprocessing.md) (e.g. additional filters and checks)
 * [Manual post-processing of databases](postprocessing_manual.md) (e.g. adding sequences or modifying taxonomy) 
 * [Usage with classifiers](classification.md)

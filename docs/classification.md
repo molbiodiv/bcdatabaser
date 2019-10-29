@@ -81,7 +81,7 @@ To format this accordingly, the following regular expression can be applied:
 
 ```sh
 sed -e "s/;tax=k:/\t/" -e "s/,[^:]:/;/" sequences.tax.fa  > sequences.tax.rdp.fa 
-
+```
 
 
 

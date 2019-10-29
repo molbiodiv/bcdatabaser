@@ -1,7 +1,5 @@
 # BCdatabaser
 
-## Introduction
-
 The Reference DB Creator (BCdatabaser) is a pipeline to create reference databases for arbitrary markers and taxonomic groups from NCBI data.
 
 * A user-friendly web interface with limited options is available at [https://bcdatabaser.molecular.eco](https://bcdatabaser.molecular.eco). Login via ORCID is mandatory and created databases will automatically be publicly vailable and assigned a DOI at Zenodo. 

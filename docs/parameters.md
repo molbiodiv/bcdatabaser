@@ -1,6 +1,6 @@
 [back to the index](./index.md)
 
-# Parameters and Output
+# Parameter Explaination
 {:.no_toc}
 
 * TOC list
@@ -21,22 +21,3 @@ In the webinterface some parameters are however fixed to most common parameters.
  - HMMs (trimming/orientation) - not yet implemented
  - Maximum number of sequences per taxon (*Web interface: fixed 9*)
  
-## Output [ToDO]
-Recommended naming scheme: `<Marker>.<Taxonomic Group>.<country code>.<date>`
-
-Basic:
- - Sequence fasta (filtered/trimmed/sintax style taxonomy header)
- 
-Additional:
- - Report (e.g. Taxonomy table (Krona))
-
-## Steps
- - Check dependencies
- - Check inputs
- - Download sequences
- - optional: trim/orient via primers (or HMM in the future)
- - Add taxonomy
- - Write reports
-
-## Helper scripts
- - geographicRange2taxonList

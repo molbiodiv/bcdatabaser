@@ -15,7 +15,7 @@ sed -i .bak -e "s/,\(.[^:]\)/_\1/" -e "s/,_/_/g" -e "s/;$//"  sequences.tax.fa
 ## Removal of sequences with many ambitious base pairs
 Databases created with the BCdatabaser prioritize on inclusion of the longest references to increase the likelihood to span the entire region of interest (within length constraits). 
 It may thus include sequences that have high content of Ns in their midst (e.g. paired end sequencing) which makes them usually unsuitable for barcoding purposes. 
-Databases can be cleaned up with the **Prinseq-lite** tool available here: https://github.com/b-brankovics/grabb/blob/master/docker/prinseq-lite.pl
+Databases can be cleaned up with the **Prinseq-lite** tool available here: [https://github.com/b-brankovics/grabb/blob/master/docker/prinseq-lite.pl](https://github.com/b-brankovics/grabb/blob/master/docker/prinseq-lite.pl)
 Execution is as follows: 
 
 ```
@@ -27,6 +27,6 @@ Be aware, the file suffix changes from ```.fa``` to ```.fasta```
 
 Databases can be further dereplicated and trimmed using the tool MetaCurator [![DOI](https://img.shields.io/badge/DOI-10.1111%2F2041--210X.13314-blue)](https://doi.org/10.1111/2041-210X.13314)
 
-For usage please refer to the respective Github page: https://github.com/RTRichar/MetaCurator
+For usage please refer to the respective Github page: [https://github.com/RTRichar/MetaCurator](https://github.com/RTRichar/MetaCurator)
 
 Reference: *Richardson, R. T., Sponsler, D. B., McMinn‐Sauder, H. and Johnson, R. M. (2019), MetaCurator: A hidden Markov model‐based toolkit for extracting and curating sequences from taxonomically‐informative genetic markers. Methods Ecol Evol. Accepted Author Manuscript. doi:10.1111/2041-210X.13314*

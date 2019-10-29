@@ -1,3 +1,5 @@
+[back to the index](../index.md)
+
 # Automated post-processing databases before classification
 {:.no_toc}
 

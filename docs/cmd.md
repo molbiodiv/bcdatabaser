@@ -217,4 +217,5 @@ Options:
 
     [--version]              show version number of bcdatabaser and exit
 ```
-
+### Upload to Zenodo
+Automated dataset upload to zenodo is also possible with the command line. You have to supply a file containing the zenodo token to bcdatabaser. The dataset is uploaded in the name of the owner of that token. If that's you, you are able to modify metadata but not to delete the record.

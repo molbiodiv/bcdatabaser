@@ -25,7 +25,7 @@ Be aware, the file suffix changes from ```.fa``` to ```.fasta```
 
 ## Dereplication 
 
-Databases can be further dereplicated and trimmed using the tool MetaCurator https://doi.org/10.1111/2041-210X.13314
+Databases can be further dereplicated and trimmed using the tool MetaCurator [![DOI](https://doi.org/10.1111/2041-210X.13314g)] 
 For usage please refer to the respective Github page: https://github.com/RTRichar/MetaCurator
 
-Reference: Richardson, R. T., Sponsler, D. B., McMinn‐Sauder, H. and Johnson, R. M. (2019), MetaCurator: A hidden Markov model‐based toolkit for extracting and curating sequences from taxonomically‐informative genetic markers. Methods Ecol Evol. Accepted Author Manuscript. doi:10.1111/2041-210X.13314
+Reference: *Richardson, R. T., Sponsler, D. B., McMinn‐Sauder, H. and Johnson, R. M. (2019), MetaCurator: A hidden Markov model‐based toolkit for extracting and curating sequences from taxonomically‐informative genetic markers. Methods Ecol Evol. Accepted Author Manuscript. doi:10.1111/2041-210X.13314*

@@ -25,7 +25,7 @@ Be aware, the file suffix changes from ```.fa``` to ```.fasta```
 
 ## Dereplication 
 
-Databases can be further dereplicated and trimmed using the tool MetaCurator [![DOI](https://img.shields.io/badge/DOI-10.1111/2041-210X.13314g-blue.svg)](https://doi.org/10.1111/2041-210X.13314g)
+Databases can be further dereplicated and trimmed using the tool MetaCurator [![DOI](https://img.shields.io/badge/DOI-10.1111/2041-210X.13314-blue.svg)](https://doi.org/10.1111/2041-210X.13314)
 
 For usage please refer to the respective Github page: https://github.com/RTRichar/MetaCurator
 

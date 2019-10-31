@@ -28,7 +28,7 @@ usearch -sintax sequence-of-interest.fa -db sequences.tax.fa -tabbedout zotus.di
 
 **References:**
 
-* *R.C. Edgar (2010), Search and clustering orders of magnitude faster than BLAST, Bioinformatics 26(19) 2460-2461 *
+* *R.C. Edgar (2010), Search and clustering orders of magnitude faster than BLAST, Bioinformatics 26(19) 2460-2461*
 * *R.C. Edgar (2016), SINTAX: a simple non-Bayesian taxonomy classifier for 16S and ITS sequences, https://doi.org/10.1101/074161*
 
 ## VSEARCH/SINTAX

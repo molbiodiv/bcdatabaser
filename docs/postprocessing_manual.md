@@ -6,6 +6,10 @@
 * TOC list
 {:toc}
 
+In general, the output sequence files, particularly the ```sequences.tax.fa``` are plain text files, which can be manually edited with any standard text editor (e.g. All platforms: [Atom](https://atom.io); MacOSX: TextEdit, [BBEdit](https://www.barebones.com/products/textwrangler/download.html); Windows: NotePad; Linux: Wordpad and many more). How to do this is self-explainatory, see the [Syntax description](./output.md). 
+
+We here show different examples to manually edit databases using the command line, which has many advantages, as e.g. fast and for larger numbers. 
+
 ## Adding local references to the database
 
 ## Checking and deleting suspicious sequences
@@ -25,7 +29,7 @@ this will output all of the sequences associated with this species in the databa
 >KM449442;tax=k:Metazoa,p:Arthropoda,c:Insecta,o:Coleoptera,f:Carabidae,g:Molops,s:Molops_piceus;
 ```
 
-For example, these sequences can be isolated and checked with a manual alignemnt, whether there is one or more sequence which does not align well with the rest. This can be done with [SeqFilter](https://github.com/BioInf-Wuerzburg/SeqFilter)
+For example, these sequences can be isolated and checked with a manual alignemnt, whether there is one or more sequence which do not align well with the rest or checked otherwise (e.g. [NCBI BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastSearch)). This can be done with [SeqFilter](https://github.com/BioInf-Wuerzburg/SeqFilter)
 
 ```
 SeqFilter --ids-patt 'LS453445|JF889461|KU906638|KU906549|KM449442' --out Molops_piceus.fa sequences.tax.fa
@@ -39,6 +43,32 @@ SeqFilter --ids-patt 'LS453445' --ids-exclude --out sequences.tax.exclude.fa seq
 
 
 ## Renaming taxa
+
+The (NCBI taxonomy)[https://www.ncbi.nlm.nih.gov/taxonomy] is in general a very good start for taxonomy, yet it might not have the most recent nomenclature changes incorporated. If you find such taxa which have been renamed, these can be adjusted using ```sed```:
+
+The basic syntax for ```sed``` as applied here is (but check ```man sed``` for more details):
+
+```sh
+sed -i bak "s/SEARCH-TERM/REPLACEMENT/" sequences.tax.fa
+```
+
+In a real life example: 
+
+```sh
+sed -i bak "s/Molops_piceus/Molops_newbeetlename/" sequences.tax.fa
+```
+
+this can be done also for higher level taxa, e.g. families: 
+
+```sh
+sed -i bak "s/Molops/NewGenus/" sequences.tax.fa
+```
+or also, if only some taxa were separated to to a different Lineage:
+
+```sh
+sed -i bak "s/f:Carabidae,g:Molops/f:NewFamily,g:Molops/" sequences.tax.fa
+```
+
 
 ## Alternative taxonomic lineages
 

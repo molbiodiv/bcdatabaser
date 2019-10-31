@@ -76,7 +76,7 @@ In the directory, there is also a visual and interactive summary of sequences in
 
 ## Additional files
 Also in the directory will be more files which may be interesting: 
-* **[CITATION](./CITATION)**, the same file as in this repository includes CITATION information for BCdatabaser and internally used tools
+* **CITATION**, the same file as in this repository including CITATION information for BCdatabaser and internally used tools
 * **bcdatabaser.log** A file that logs all of the steps BCdatabaser has performed, paramaters and if unsuccessfull error descriptions, e.g.:
 ```
 [...]

@@ -12,7 +12,9 @@
   ## Searching for exisiting datasets 
  You might find already created databases for your given research question. 
  The search interface on the left hand side allows a quick scan for previous requests, alongside statistical information.
- [!Searching](https://i.ibb.co/z8j66cd/Bildschirmfoto-2019-10-31-um-14-10-00.png)
+ 
+ ![Searching](https://i.ibb.co/z8j66cd/Bildschirmfoto-2019-10-31-um-14-10-00.png)
+ 
  This is possible without logging in with an ORCID.
 
   ## Creating new databases
@@ -45,11 +47,15 @@
 
   Requests are handled in order of their submission, meaning that your job may start immediately or delayed. 
  You can check the status at the bottom of the page
+ 
  ![queue](https://i.ibb.co/41zLmYz/Bildschirmfoto-2019-10-31-um-14-15-46.png)
 
  ![success](https://img.shields.io/badge/job-success-brightgreen.svg) the job was successfully finished, you can find the results on the right side added to previous results.
+ 
  ![running](https://img.shields.io/badge/job-running-blue.svg) this job is currently worked on
+ 
  ![queue](https://img.shields.io/badge/job-queued-yellow.svg) this job is waiting for other jobs to be completed before it is started
+ 
  ![fail](https://img.shields.io/badge/job-fail-red.svg) this job failed. It may be due to several reasons, connection issues or taxa were not found. Pleas check the ```Details``` page and feel free to open an issue in case you can not interpret the error.
 
   ### Download

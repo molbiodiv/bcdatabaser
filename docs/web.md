@@ -6,7 +6,7 @@
 * TOC list
 {:toc}
 
-## Access
+## Web Access
 The webinterface is available at: [bcdatabaser.molecular.eco](https://bcdatabaser.molecular.eco)
 
 ## Searching for exisiting datasets 

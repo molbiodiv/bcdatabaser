@@ -15,6 +15,8 @@ However, if you want or need a native installation please see the websites of th
 for installation instructions for your platform and refer to the steps in the [Dockerfile](./Dockerfile).
 If you encounter any problems please open an [issue](https://github.com/molbiodiv/bcdatabaser/issues) and we will do our best to help.
 
+Docker is freely available for most platforms: [https://docs.docker.com/install](https://docs.docker.com/install)
+
 ### Docker
 Pull the container from DockerHub and you are ready to go
 

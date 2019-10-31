@@ -18,7 +18,7 @@ cat sequences.tax.fa unpulished.fa > sequences.tax.add.fa
 ```
 This results however in those sequences not including the taxonomic annotations. They can be manually added by checking the taxa of interest at the [NCBI taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy) webpage. Alternatively, for larger numbers, they can be obtained in bulk using the [NCBI eutils](https://www.ncbi.nlm.nih.gov/books/NBK25500/). 
 
-**However, we strongly recommend to deposit unpublished sequences**, and once they are validated by NCBI, they will also be available in the automated BCdatabaser created datasets. Thus, we encourage scientists first to [deposit](https://www.ncbi.nlm.nih.gov/guide/howto/submit-sequence-data/) unpublished sequences in NCBI and after they are accepted in NCBI, to run BCdatabaser. This will include the taxonomic information for these sequences automatically, and most journals already require sequence deposition prior to manuscript submission anyways.
+**However, we strongly recommend to deposit unpublished sequences**, and once they are validated by NCBI, they will also be available in the automated BCdatabaser created datasets. Thus, we encourage scientists first to [deposit](https://www.ncbi.nlm.nih.gov/guide/howto/submit-sequence-data/) unpublished sequences in NCBI and then run BCdatabaser. This will include the taxonomic information for these sequences automatically, and most journals already require sequence deposition prior to manuscript submission anyways.
 
 ## Checking and deleting suspicious sequences
 If you find suspicious taxonomic assignments, you may want to apply more stringent parameters to your classification algorithm (check their manuals). If this still not helps it might be wrongly taxonomized sequences in NCBI. 

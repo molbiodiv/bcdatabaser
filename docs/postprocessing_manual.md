@@ -6,12 +6,12 @@
 * TOC list
 {:toc}
 
-In general, the output sequence files, particularly the ```sequences.tax.fa``` are plain text files, which can be manually edited with any standard text editor (e.g. All platforms: [Atom](https://atom.io); MacOSX: TextEdit, [BBEdit](https://www.barebones.com/products/textwrangler/download.html); Windows: NotePad; Linux: Wordpad and many more). How to do this is self-explainatory, see the [Syntax description](./output.md). 
+In general, the output sequence files, particularly the ```sequences.tax.fa``` are plain text files, which can be manually edited with any standard text editor (e.g. All platforms: [Atom](https://atom.io); MacOSX: TextEdit, [BBEdit](https://www.barebones.com/products/textwrangler/download.html); Windows: NotePad; Linux: Wordpad and many more). How to do this is self-explainatory when following the [Syntax description](./output.md). 
 
 We here show different examples to manually edit databases using the command line, which has many advantages, as e.g. fast and for larger numbers. 
 
 ## Adding local references to the database
-The ```sequences.tax.fa``` is a standard fasta-formated text file, which can be complemented with any other fasta-file, e.g. unplublished sequences or such from other sources. 
+The ```sequences.tax.fa``` is a standard fasta-formated text file, which can be complemented with any other fasta-file, e.g. unpublished sequences or such from other sources. 
 
 ```
 cat sequences.tax.fa unpulished.fa > sequences.tax.add.fa
@@ -82,4 +82,37 @@ sed -i bak "s/f:Carabidae,g:Molops/f:NewFamily,g:Molops/" sequences.tax.fa
 
 ## Alternative taxonomic lineages
 
-## 
+As already mentioned above, [NCBI taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy) is in general a very good start for taxonomy. However, as in science general, not everybody will agree to their classification. In such cases, the taxonomy can be replaced with other systems. A good choice might be the [taxize](https://cran.r-project.org/web/packages/taxize/index.html) package for R, which will use the taxonomy as used by [EOL](https://eol.org) and [ITIS](https://www.itis.gov).
+
+Given that a taxonomic classification has been completed, and the final results are loaded into R, this can be done as: 
+
+Basic:
+```R
+species <- c("Papaver rhoeas","Sinapis alba", "Helianthus annuus")
+(result <- tax_name(query = species, get = c("kingdom","order","family","genus","species"), db = "itis"))
+```
+
+With BCdatabaser results: The format depends on your classifier output, wherefore we here assume that it has been imported as a standardized [phyloseq](https://joey711.github.io/phyloseq/import-data.html) object:
+
+**All species level classifications:**
+```
+species <- gsub("s:","",tax_table(physeq)[,"species"])
+(result <- tax_name(query = species, get = c("kingdom","order","family","genus","species"), db = "itis"))
+```
+
+**Or in case you use hierarchical classification with variable resolution:**
+```
+tax_table(dataset.comp)[tax_table(dataset.comp)[,"phylum"]=="","phylum"]<-paste(tax_table(dataset.comp)[tax_table(dataset.comp)[,"phylum"]=="","kingdom"],"_spc",sep="")
+tax_table(dataset.comp)[tax_table(dataset.comp)[,"order"]=="","order"]<-paste(tax_table(dataset.comp)[tax_table(dataset.comp)[,"order"]=="","phylum"],"_spc",sep="")
+tax_table(dataset.comp)[tax_table(dataset.comp)[,"family"]=="","family"]<-paste(tax_table(dataset.comp)[tax_table(dataset.comp)[,"family"]=="","order"],"_spc",sep="")
+tax_table(dataset.comp)[tax_table(dataset.comp)[,"genus"]=="","genus"]<-paste(tax_table(dataset.comp)[tax_table(dataset.comp)[,"genus"]=="","family"],"_spc",sep="")
+tax_table(dataset.comp)[tax_table(dataset.comp)[,"species"]=="","species"]<-paste(tax_table(dataset.comp)[tax_table(dataset.comp)[,"species"]=="","genus"],"_spc",sep="")
+
+taxa <- gsub("_spc.*","",gsub(".*:","",tax_table(data.species)[,"species"]))
+(result <- tax_name(query = taxa, get = c("kingdom","order","family","genus","species"), db = "itis"))
+
+```
+
+Please be aware that some taxa names might not shared between the NCBI and ITIS databases, which may results in some taxa not yielding successfull results.
+
+

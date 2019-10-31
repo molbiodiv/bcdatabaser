@@ -11,6 +11,14 @@ In general, the output sequence files, particularly the ```sequences.tax.fa``` a
 We here show different examples to manually edit databases using the command line, which has many advantages, as e.g. fast and for larger numbers. 
 
 ## Adding local references to the database
+The ```sequences.tax.fa``` is a standard fasta-formated text file, which can be complemented with any other fasta-file, e.g. unplublished sequences or such from other sources. 
+
+```
+cat sequences.tax.fa unpulished.fa > sequences.tax.add.fa
+```
+This results however in those sequences not including the taxonomic annotations. They can be manually added by checking the taxa of interest at the [NCBI taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy) webpage. Alternatively, for larger numbers, they can be obtained in bulk using the [NCBI eutils](https://www.ncbi.nlm.nih.gov/books/NBK25500/). 
+
+**However, we strongly recommend to deposit unpublished sequences**, and once they are validated by NCBI, they will also be available in the automated BCdatabaser created datasets. Thus, we encourage scientists first to [deposit](https://www.ncbi.nlm.nih.gov/guide/howto/submit-sequence-data/) unpublished sequences in NCBI and after they are accepted in NCBI, to run BCdatabaser. This will include the taxonomic information for these sequences automatically, and most journals already require sequence deposition prior to manuscript submission anyways.
 
 ## Checking and deleting suspicious sequences
 If you find suspicious taxonomic assignments, you may want to apply more stringent parameters to your classification algorithm (check their manuals). If this still not helps it might be wrongly taxonomized sequences in NCBI. 
@@ -44,7 +52,7 @@ SeqFilter --ids-patt 'LS453445' --ids-exclude --out sequences.tax.exclude.fa seq
 
 ## Renaming taxa
 
-The (NCBI taxonomy)[https://www.ncbi.nlm.nih.gov/taxonomy] is in general a very good start for taxonomy, yet it might not have the most recent nomenclature changes incorporated. If you find such taxa which have been renamed, these can be adjusted using ```sed```:
+The [NCBI taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy) is in general a very good start for taxonomy, yet it might not have the most recent nomenclature changes incorporated. If you find such taxa which have been renamed, these can be adjusted using ```sed```:
 
 The basic syntax for ```sed``` as applied here is (but check ```man sed``` for more details):
 

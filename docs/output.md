@@ -17,7 +17,7 @@ e.g.:
 ```
 coi.insecta.DE-Frankonia.2019-10-24
 ```
-In this extracted directory, the following files are present. 
+In this extracted directory the following files are present. We recommend to also follow this file format in the command line version, especially if deposited in a database as a reference set (see also: [Public deposition](./public_deposition.md)).
 
 ## Sequence data
 
@@ -39,7 +39,7 @@ TAGTATGAGCTCATCATATATTTACAGTAGGAATAGATGTGGATACTCGAGCTTATTTTACATCAGCTAC
 ```
 
 ## Syntax of taxonomy
-Taxonomy is presented in a syntax directly in the FASTA header as used by a variety of classifiers. Slight modifications might need to made for some software tools (see the [./classification](classification documentation)). In more detail, we follow strictly the SINTAX nomenclature as described in the [https://www.drive5.com/usearch/manual/tax_annot.html](USEARCH manual):
+Taxonomy is included in a syntax directly in the FASTA header as used by a variety of classifiers. Slight modifications might be necessary to made for some software tools accpt this format (see also the [classification documentation](./classification.md)). In more detail, we follow strictly the SINTAX nomenclature as described in the [USEARCH manual](https://www.drive5.com/usearch/manual/tax_annot.html):
 ```
 ><UNIQUEID>;tax=k:Kingdom,p:Phylum,c:Class,o:Order,f:Family,g:Genus,s:Species;
 ```
@@ -68,6 +68,11 @@ sed -e "s/;tax=k:/\t/" -e "s/,/;/g" -e "s/:/__/g" sequences.tax.fa  > sequences.
 
 
 ## Visualisation as Krona Charts
+
+In the directory, there is also a visual and interactive summary of sequences included in the final dataset, named as ```taxonomy.krona.html```. This file can be viewed and interacted with using a standard internet browser. For large databases, the data of the chart may also be located in a corresponding subdirectory. 
+
+![Example Krona Chart](https://i.ibb.co/Tq5GW98/Bildschirmfoto-2019-10-31-um-13-36-42.png)
+
 
 ## Additional files
 Also in the directory will be more files which may be interesting: 

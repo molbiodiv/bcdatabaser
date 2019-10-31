@@ -11,15 +11,15 @@ In a nutshell:
 *  *web interface or optionally on command line:* deposits data publicly at Zenodo.org and assigns a citable DOI
 
 ## Basic documentation 
-* A user-friendly web interface with limited options is available at [https://bcdatabaser.molecular.eco](https://bcdatabaser.molecular.eco). Login via ORCID is mandatory, created databases will be publicly available and assigned a DOI at Zenodo. 
+* [Web interface](./web.md) A user-friendly w with limited options is available at [https://bcdatabaser.molecular.eco](https://bcdatabaser.molecular.eco). Login via ORCID is mandatory, created databases will be publicly available and assigned a DOI at Zenodo. 
 * [Command line version](cmd.md)
-* [Parameters](parameters.md)
-* [Search details](searches.md)
+* [Parameters](parameters.md) [ToDo]
+* [Search details](searches.md) [ToDo]
 * [Output and file syntax](output.md)
 
 ## Further documentation 
 * [Automated post-processing of databases](postprocessing.md) (e.g. additional filters and checks)
-* [Manual post-processing of databases](postprocessing_manual.md) (e.g. adding sequences or modifying taxonomy) 
+* [Manual post-processing of databases](postprocessing_manual.md) (e.g. adding sequences or modifying taxonomy) [ToDo]
 * [Usage with classifiers](classification.md)
 * [Public deposition](public_deposition.md)
  

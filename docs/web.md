@@ -7,7 +7,7 @@
 {:toc}
 
 ## Access
-The webinterface is available at: [https://bcdatabaser.molecular.eco](https://bcdatabaser.molecular.eco)
+The webinterface is available at: [https://bcdatabaser.molecular.eco](bcdatabaser.molecular.eco)
 
 ## Searching for exisiting datasets 
 You might find already created databases for your given research question. 
@@ -17,7 +17,7 @@ This is possible without logging in with an ORCID.
 
 ## Creating new databases
 ### ORCID
-The web interface requires authentification using an [ORCID](https://orcid.org) to associate your requests and final datasets with your account. 
+The web interface requires authentification using an [https://orcid.org](ORCID) to associate your requests and final datasets with your account. 
 
 ### Parameters
 
@@ -45,15 +45,16 @@ Poaceae
 
 Requests are handled in order of their submission, meaning that your job may start immediately or delayed. 
 You can check the status at the bottom of the page
-[!queue](https://i.ibb.co/41zLmYz/Bildschirmfoto-2019-10-31-um-14-15-46.png)
+[!https://i.ibb.co/41zLmYz/Bildschirmfoto-2019-10-31-um-14-15-46.png](queue)
 
-[!success](https://img.shields.io/badge/job-success-brightgreen.svg) the job was successfully finished, you can find the results on the right side added to previous results.
-[!running](https://img.shields.io/badge/job-running-blue.svg) this job is currently worked on
-[!queue](https://img.shields.io/badge/job-queued-yellow.svg) this job is waiting for other jobs to be completed before it is started
-[!fail](https://img.shields.io/badge/job-fail-red.svg) this job failed. It may be due to several reasons, connection issues or taxa were not found. Pleas check the ```Details``` page and feel free to open an issue in case you can not interpret the error.
+[!https://img.shields.io/badge/job-success-brightgreen.svg](success) the job was successfully finished, you can find the results on the right side added to previous results.
+[!https://img.shields.io/badge/job-running-blue.svg](running) this job is currently worked on
+[!https://img.shields.io/badge/job-queued-yellow.svg](queue) this job is waiting for other jobs to be completed before it is started
+[!https://img.shields.io/badge/job-fail-red.svg](fail) this job failed. It may be due to several reasons, connection issues or taxa were not found. Pleas check the ```Details``` page and feel free to open an issue in case you can not interpret the error.
 
 ### Download
 
-You will find the download, DOI and citation information with your name as database author on [Zenodo](Zenodo.org)
+You will find the download, DOI and citation information with your name as database author on [Zenodo.org](Zenodo.org)
 
-[!Zenodo](https://i.ibb.co/RgDQ861/Bildschirmfoto-2019-10-31-um-14-13-06.png)
+[!https://i.ibb.co/RgDQ861/Bildschirmfoto-2019-10-31-um-14-13-06.png](Zenodo)
+

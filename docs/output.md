@@ -21,7 +21,7 @@ In this extracted directory the following files are present. We recommend to als
 
 ## Sequence data
 
-* **sequences.tax.fa** All result sequences including taxonomy information parsed into the header (sse Syntax below) 
+* ```sequences.tax.fa``` All result sequences including taxonomy information parsed into the header (sse Syntax below) 
 ```
 >LS453445;tax=k:Metazoa,p:Arthropoda,c:Insecta,o:Coleoptera,f:Carabidae,g:Molops,s:Molops_piceus;
 ACATCCTGAAGTTTATATTTTAATTCTCCCAGGATTTGGAATAATTTCCCATATTATTAGACAAGAAAGA
@@ -29,7 +29,7 @@ GGTAAAAAAGAAACATTTGGTTCATTAGGAATAATTTATGCTATATTAGCTATTGGTTTATTAGGATTTG
 [...]
 ```
 
-* **sequences.fa** All result sequences without taxonomy, basically the sequences as have been named in NCBI
+* ```sequences.fa``` All result sequences without taxonomy, basically the sequences as have been named in NCBI
 ```
 >LS453445.1 Molops piceus mitochondrial partial COI gene for cytochrome oxidase subunit 1, specimen voucher MNCN-AI362
 ACATCCTGAAGTTTATATTTTAATTCTCCCAGGATTTGGAATAATTTCCCATATTATTAGACAAGAAAGA
@@ -76,17 +76,16 @@ In the directory, there is also a visual and interactive summary of sequences in
 
 ## Additional files
 Also in the directory will be more files which may be interesting: 
-* **CITATION**, the same file as in this repository including CITATION information for BCdatabaser and internally used tools
-* **bcdatabaser.log** A file that logs all of the steps BCdatabaser has performed, paramaters and if unsuccessfull error descriptions, e.g.:
+* ```CITATION```, the same file as in this repository including CITATION information for BCdatabaser and internally used tools
+* ```bcdatabaser.log``` A file that logs all of the steps BCdatabaser has performed, paramaters and if unsuccessfull error descriptions, e.g.:
 ```
 [...]
 [10-24 08:44:38] [BCdatabaser] Finished: Add CITATION file to output directory
 [10-24 08:44:38] [BCdatabaser] Starting: Zipping output directory
 [10-24 08:44:38] [BCdatabaser] zip -r coi.insecta.DE-Frankonia.2019-10-24.zip coi.insecta.DE-Frankonia.2019-10-24
 ```
-* three **list.** files: 
-  - **list.txt**, all hits given the taxonomic range, taxa list and/or length restriction
-  - **list.sorted.txt** the same list, yet sorted according to sequence length
-  - **list.filtered.txt** the sorted list limited to ```--sequences-per-taxon``` per taxon
-  
-* **taxa_list.txt** the taxa list included in the analyses, if used
+* four  list files: 
+  - ```list.txt```, all sequence hits given the taxonomic range, taxa list and/or length restriction
+  - ```list.sorted.txt``` the same list, yet sorted according to sequence length
+  - ```list.filtered.txt``` the sorted list limited to ```--sequences-per-taxon``` per taxon
+  - ```taxa_list.txt``` the taxa name list included in the analyses, if used

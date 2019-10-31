@@ -16,7 +16,9 @@ The ```sequences.tax.fa``` is a standard fasta-formated text file, which can be 
 ```
 cat sequences.tax.fa unpulished.fa > sequences.tax.add.fa
 ```
-This results however in those sequences not including the taxonomic annotations. They can be manually added by checking the taxa of interest at the [NCBI taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy) webpage and adjusting headers according to the [taxonomy syntax](./output.md). Alternatively, for larger numbers, they can be obtained in bulk using the [NCBI eutils](https://www.ncbi.nlm.nih.gov/books/NBK25500/). 
+This results however in those sequences not including the taxonomic annotations. 
+* They can be manually added by checking the taxa of interest at the [NCBI taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy) webpage and adjusting headers according to the [taxonomy syntax](./output.md). 
+* Alternatively, for larger numbers, they can be obtained in bulk using the [NCBI eutils](https://www.ncbi.nlm.nih.gov/books/NBK25500/), you can have a look at the requests BCdatabaser does in scripts as a starter: [add_taxonomy_to_fasta.pl](https://github.com/molbiodiv/bcdatabaser/blob/master/bin/add_taxonomy_to_fasta.pl) and [makeRefDB.sh](https://github.com/molbiodiv/bcdatabaser/blob/master/bin/makeRefDB.sh)
 
 **However, we strongly recommend to deposit unpublished sequences**, and once they are validated by NCBI, they will also be available in the automated BCdatabaser created datasets. Thus, we encourage scientists first to [deposit](https://www.ncbi.nlm.nih.gov/guide/howto/submit-sequence-data/) unpublished sequences in NCBI and then run BCdatabaser. This will include the taxonomic information for these sequences automatically, and most journals already require sequence deposition prior to manuscript submission anyways.
 

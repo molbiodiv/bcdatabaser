@@ -95,13 +95,13 @@ species <- c("Papaver rhoeas","Sinapis alba", "Helianthus annuus")
 With BCdatabaser results: The format depends on your classifier output, wherefore we here assume that it has been imported as a standardized [phyloseq](https://joey711.github.io/phyloseq/import-data.html) object:
 
 **All species level classifications:**
-```
+```R
 species <- gsub("s:","",tax_table(physeq)[,"species"])
 (result <- tax_name(query = species, get = c("kingdom","order","family","genus","species"), db = "itis"))
 ```
 
 **Or in case you use hierarchical classification with variable resolution:**
-```
+```R
 tax_table(dataset.comp)[tax_table(dataset.comp)[,"phylum"]=="","phylum"]<-paste(tax_table(dataset.comp)[tax_table(dataset.comp)[,"phylum"]=="","kingdom"],"_spc",sep="")
 tax_table(dataset.comp)[tax_table(dataset.comp)[,"order"]=="","order"]<-paste(tax_table(dataset.comp)[tax_table(dataset.comp)[,"order"]=="","phylum"],"_spc",sep="")
 tax_table(dataset.comp)[tax_table(dataset.comp)[,"family"]=="","family"]<-paste(tax_table(dataset.comp)[tax_table(dataset.comp)[,"family"]=="","order"],"_spc",sep="")

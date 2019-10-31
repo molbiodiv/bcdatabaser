@@ -39,7 +39,7 @@ TAGTATGAGCTCATCATATATTTACAGTAGGAATAGATGTGGATACTCGAGCTTATTTTACATCAGCTAC
 ```
 
 ## Syntax of taxonomy
-Taxonomy is included in a syntax directly in the FASTA header as used by a variety of classifiers. Slight modifications might be necessary to made for some software tools accpt this format (see also the [classification documentation](./classification.md)). In more detail, we follow strictly the SINTAX nomenclature as described in the [USEARCH manual](https://www.drive5.com/usearch/manual/tax_annot.html):
+Taxonomy is included in a syntax directly in the FASTA header as used by a variety of classifiers. Slight modifications might be necessary for some software tools accpt this format (see also the [classification documentation](./classification.md)). In more detail, we follow strictly the SINTAX nomenclature as described in the [USEARCH manual](https://www.drive5.com/usearch/manual/tax_annot.html):
 ```
 ><UNIQUEID>;tax=k:Kingdom,p:Phylum,c:Class,o:Order,f:Family,g:Genus,s:Species;
 ```

@@ -19,7 +19,7 @@ In a nutshell:
 
 ## Further documentation 
 * [Automated post-processing of databases](postprocessing.md) (e.g. additional filters and checks)
-* [Manual post-processing of databases](postprocessing_manual.md) (e.g. adding sequences or modifying taxonomy) [ToDo]
+* [Manual post-processing of databases](postprocessing_manual.md) (e.g. adding sequences or modifying taxonomy)
 * [Usage with classifiers](classification.md)
 * [Public deposition](public_deposition.md)
  

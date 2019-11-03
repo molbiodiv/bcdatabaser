@@ -6,7 +6,7 @@ use File::Copy;
 use NCBI::Taxonomy;
 use FindBin;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.1.0';
 
 my $L = Log::Log4perl::get_logger();
 
@@ -212,21 +212,28 @@ sub add_taxonomy_to_fasta{
 sub get_taxa_filter_string_from_taxfile{
 	my $self = shift;
 	$taxa_list = $self->{taxa_list};
+	$warn_not_die = $self->{warn_failed_tax_names};
 	return "" unless($taxa_list);
 	my $taxa_filter_string = "";
 	my @taxa = ();
 	my @failed_taxa = ();
 	open IN, "<$taxa_list" or $L->logdie("$!");
 	while(<IN>){
-		chomp;
-		unless($self->is_valid_tax_string($_)){
+		# Use the regex instead of chomp as users might supply files from different platforms
+		s/\R\z//;
+		if($self->is_valid_tax_string($_)){
+			my $taxon = $_."[ORGN]";
+			push(@taxa, $taxon);
+		} else {
 			push(@failed_taxa, $_);
 		}
-		my $taxon = $_."[ORGN]";
-		push(@taxa, $taxon);
 	}
 	if(@failed_taxa){
-		$L->logdie("Error: at least one entry in the --taxa-list file is not a valid tax string: ".join(", ",@failed_taxa));
+		if($warn_not_die){
+			$L->info("Warning: at least one entry in the --taxa-list file is not a valid tax string, they were not added to the search string: ".join(", ",@failed_taxa));
+		} else {
+			$L->logdie("Error: at least one entry in the --taxa-list file is not a valid tax string: ".join(", ",@failed_taxa));
+		}
 	}
 	close IN or $L->logdie("$!");
 	copy($taxa_list, $self->{outdir}."/taxa_list.txt");
@@ -347,7 +354,9 @@ sub push_to_zenodo{
 	print DF "</ul>";
 	close DF or die "Can not close zenodo description file $descFile\n$!";
 	my $zenodo_token_file = $self->{zenodo_token_file};
-	$self->run_command("python $FindBin::RealBin/push_to_zenodo.py ".'$('."cat $zenodo_token_file) $outdir.zip $descFile", "Pushing zip file to zenodo");
+	my $zenodo_author_name = $self->{zenodo_author_name};
+	my $zenodo_author_orcid = $self->{zenodo_author_orcid};
+	$self->run_command("python $FindBin::RealBin/push_to_zenodo.py ".'$('."cat $zenodo_token_file) $outdir.zip $descFile '$zenodo_author_name' '$zenodo_author_orcid'", "Pushing zip file to zenodo");
 	unlink($descFile);
 }
 

@@ -80,12 +80,25 @@ $options{'taxa-list=s'} = \( my $opt_taxa_list="" );
 If this option is set all taxon names provided by the user (--taxonomic-range and
 entries in the --taxa-list file) are checked against the names.dmp file from NCBI
 The program stops with an error if any species name is not listed in names.dmp.
+If --warn-failed-tax-names is set the program does not stop but prints a warning.
 Set the path to the names.dmp file via --names-dmp-path
 Default: false
 
 =cut
 
 $options{'check-tax-names'} = \( my $opt_check_tax_names=0 );
+
+=item [--warn-failed-tax-names]
+
+Only used if --check-tax-names is set. Instead of dying when a tax name in the 
+--tax-list is unknown these taxa are removed from the search string and a warning
+is printed. This means that your search string does not contain all taxa in your
+file so it is important to check the warning to see which ones were removed.
+Default: false
+
+=cut
+
+$options{'warn-failed-tax-names'} = \( my $opt_warn_failed_tax_names=0 );
 
 =item [--names-dmp-path <PATH>]
 
@@ -213,6 +226,24 @@ Default: false
 
 $options{'zenodo-token-file=s'} = \( my $opt_zenodo_token_file );
 
+=item [--zenodo-author-name <STRING>]
+
+Name of the author that created this file.
+Required if --zenodo-token-file is used, otherwise ignored.
+
+=cut
+
+$options{'zenodo-author-name=s'} = \( my $opt_zenodo_author_name );
+
+=item [--zenodo-author-orcid <STRING>]
+
+ORCID iD of the author that created this file.
+Required if --zenodo-token-file is used, otherwise ignored.
+
+=cut
+
+$options{'zenodo-author-orcid=s'} = \( my $opt_zenodo_author_orcid );
+
 =item [--help]
 
 show help
@@ -243,6 +274,7 @@ if($opt_version){
 }
 pod2usage(1) if ($opt_help);
 pod2usage( -msg => "No marker search string specified. Use --marker-search-string='<SEARCHSTRING>'", -verbose => 0, -exitval => 1, -output => \*STDERR )  unless ( $opt_marker_search_string );
+pod2usage( -msg => "Zenodo token file set but author or orcid not specified, use --zenodo-author-name and --zenodo-author-orcid", -verbose => 0, -exitval => 1, -output => \*STDERR )  if ( $opt_zenodo_token_file and (not $opt_zenodo_author_name or not $opt_zenodo_author_orcid) );
 # Append / to edirect dir if it is not empty and does not already contain a trailing slash
 $opt_edirect_dir .= "/" if($opt_edirect_dir && substr($opt_edirect_dir,-1) ne "/");
 # zip implied by zenodo_token
@@ -269,6 +301,7 @@ my $bcdatabaser = BCdatabaser->new({
     'taxonomic_range' => $opt_taxonomic_range,
     'taxa_list' => $opt_taxa_list,
     'check_tax_names' => $opt_check_tax_names,
+    'warn_failed_tax_names' => $opt_warn_failed_tax_names,
     'names_dmp_path' => $opt_names_dmp_path,
     'sequence_length_filter' => $opt_sequence_length_filter,
     'seqs_per_taxon' => $opt_seqs_per_taxon,
@@ -276,7 +309,9 @@ my $bcdatabaser = BCdatabaser->new({
     'seqfilter_bin' => $opt_seqfilter_bin,
     'dispr_bin' => $opt_dispr_bin,
     'primer_file' => $opt_primer_file,
-    'zenodo_token_file' => $opt_zenodo_token_file
+    'zenodo_token_file' => $opt_zenodo_token_file,
+    'zenodo_author_name' => $opt_zenodo_author_name,
+    'zenodo_author_orcid' => $opt_zenodo_author_orcid
 });
 $L->info(join(" ", "Call:", $0, @origARGV));
 $bcdatabaser->search_ncbi();

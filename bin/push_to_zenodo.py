@@ -66,7 +66,7 @@ data = {
             {'relation': 'cites', 'identifier':'https://doi.org/10.5281/zenodo.1462861'},
             {'relation': 'cites', 'identifier':'https://doi.org/10.1186/1471-2105-12-385'}
         ],
-        'version': '1.0.0'
+        'version': '1.1.0'
     }
 }
 r = requests.put(zenodo_api_url+'deposit/depositions/%s' % deposition_id, params={'access_token': zenodo_token}, data=json.dumps(data), headers=headers)

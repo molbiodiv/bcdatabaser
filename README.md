@@ -298,4 +298,5 @@ Thanks a lot Mirza!
 This software is licensed under [MIT](./LICENSE). Be aware that the libraries and external programs are licensed separately (possibly under different licenses).
 
 ## Changes
+ - 1.1.0 <2019-11-03> Add author options. Fix line-ending bug (#23)
  - 1.0.0 <2019-07-15> Initial stable release

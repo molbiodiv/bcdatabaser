@@ -5,7 +5,7 @@ import json
 import sys
 
 # set this variable to switch between production (https://zenodo.org/api/) and sandbox (https://sandbox.zenodo.org/api/)
-zenodo_api_url = "https://sandbox.zenodo.org/api/"
+zenodo_api_url = "https://zenodo.org/api/"
 
 if len(sys.argv) < 6:
     print("USAGE: push_result_to_zenodo.py <zenodo_token> <filename> <descFile> <creatorName> <creatorOrcid>")

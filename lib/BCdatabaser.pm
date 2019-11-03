@@ -219,7 +219,8 @@ sub get_taxa_filter_string_from_taxfile{
 	my @failed_taxa = ();
 	open IN, "<$taxa_list" or $L->logdie("$!");
 	while(<IN>){
-		chomp;
+		# Use the regex instead of chomp as users might supply files from different platforms
+		s/\R\z//;
 		if($self->is_valid_tax_string($_)){
 			my $taxon = $_."[ORGN]";
 			push(@taxa, $taxon);

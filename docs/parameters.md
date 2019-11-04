@@ -27,7 +27,7 @@ See the **Command line reference** for more details on each command. See also **
  - Length range  (*Web: 100bp - 2000bp*): ```--sequence-length-filter```
  - Maximum #Sequences/Taxon (*Web: 9*): ```--sequences-per-taxon```
  - Sequence trimming (*Web: disabled*): ```--primer-file ```
- - Zenodo push settings: ```--zenodo-token-file```, ```--zenodo-author-name```, ```--zenodo-author-orcid```
+ - Zenodo push settings (*Web:from user login**): ```--zenodo-token-file```, ```--zenodo-author-name```, ```--zenodo-author-orcid```
  - Output settings: ```--zip```, ```--outdir```
 
 **Expert options (command line only, and not necessary with Docker):**
@@ -229,7 +229,7 @@ Dionaea muscipula
 Achillea millefolium
 Cirsium arvense
 ```
-resultin in:
+resulting in:
 ```
 AND (Bellis perennis[ORGN] OR Brassica napus[ORGN] OR Dionaea muscipula[ORGN] OR Achillea millefolium[ORGN] OR Cirsium arvense[ORGN])
 ```

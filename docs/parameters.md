@@ -1,6 +1,6 @@
 [back to the index](./index.md)
 
-# Parameter Explaination
+# Parameter Explanation
 {:.no_toc}
 
 * TOC list
@@ -10,17 +10,30 @@
 Independent of whether the command line or web interface were used, the tool considers the following parameters. 
 In the webinterface some parameters are however fixed to most common parameters. 
 
-**Required:**
- - Search term (marker)
+See the **Command line reference** for more details on each command. See also **NCBI query details** below in how the actual search query to NCBI is composed.
 
+**Required:**
+ - Search term (marker): ```--marker-search-string```  
+ 
 **Optional**
- - Taxonomic scope (default: root): 
- - Taxonlist
- - Length range  (*Web interface: 100bp - 2000bp*)
+ - Taxonomic scope (default: root): ```--taxonomic-range```
+ - Taxa List (default: none): ```--taxa-list```
  - Degenerate primers (trimming/orientation)
  - HMMs (trimming/orientation) - not yet implemented
  - Maximum number of sequences per taxon (*Web interface: fixed 9*)
- 
+
+**Web interface fixed, but changeable in command line version:** 
+ - Check that all taxa have sequences available (*Web: TRUE*): ```--check-tax-names``` and ```--warn-failed-tax-names```
+ - Length range  (*Web: 100bp - 2000bp*): ```--sequence-length-filter```
+ - Maximum #Sequences/Taxon (*Web: 9*): ```--sequences-per-taxon```
+ - Sequence trimming (*Web: disabled*): ```--primer-file ```
+ - Zenodo push settings: ```--zenodo-token-file```, ```--zenodo-author-name```, ```--zenodo-author-orcid```
+ - Output settings: ```--zip```, ```--outdir```
+
+**Expert options (command line only, and not necessary with Docker):**
+```--names-dmp-path```, ```--edirect-dir```,```--edirect-batch-size```, ```--krona-bin```, ```--seqfilter-bin```, ```--dispr-bin``` 
+
+
 **Command Line Reference:**
 You can get this information for your version by running `bcdatabaser.pl --help`:
 
@@ -178,4 +191,42 @@ Options:
     [--help]                 show help
 
     [--version]              show version number of bcdatabaser and exit
+```
+
+## NCBI query details
+
+NCBI allows for advanced searches with a specific search syntax as [described in detail in their handbook](https://www.ncbi.nlm.nih.gov/books/NBK49540/).
+
+### Construction from user data
+From the user provided parameters a search query string is constructed as follows:
+
+```
+(<SEARCH_STRING>) AND <TAXONOMIC_SCOPE>[ORGN] AND <LENGTH_RANGE>[SLEN] NOT gbdiv est[prop] NOT gbdiv gss[prop] NOT patent NOT environmental NOT unverified
+```
+so your search string, taxonomic scope and length range are used as provided.
+Additionally the search excludes est and gss data sets as well as patented, environmental and unverified sequences.
+
+### Example
+A query string from the web interface with the `rbcL` preset and *Bellis* as taxonomic scope would be:
+```
+(rbcL OR 'ribulose-1,5-bisphosphate carboxylase/oxygenase large subunit') AND Bellis[ORGN] AND 100:2000[SLEN] NOT gbdiv est[prop] NOT gbdiv gss[prop] NOT patent NOT environmental NOT unverified
+```
+
+### Taxa List File
+If a taxa list file is provided the following part is added to the search string right after the taxonomic scope:
+```
+AND (<LINE1>[ORGN] OR <LINE2>[ORGN] OR <LINE3>[ORGN] OR <LINE4>[ORGN] OR <LINE5>[ORGN] OR ...)
+```
+
+so in a real case this could look like this, for an example taxa list file:
+```
+Bellis perennis
+Brassica napus
+Dionaea muscipula
+Achillea millefolium
+Cirsium arvense
+```
+resultin in:
+```
+AND (Bellis perennis[ORGN] OR Brassica napus[ORGN] OR Dionaea muscipula[ORGN] OR Achillea millefolium[ORGN] OR Cirsium arvense[ORGN])
 ```

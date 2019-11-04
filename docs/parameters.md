@@ -31,11 +31,14 @@ See the **Command line reference** for more details on each command. See also **
  - Output settings: ```--zip```, ```--outdir```
 
 **Expert options (command line only, and not necessary with Docker):**
+
 ```--names-dmp-path```, ```--edirect-dir```,```--edirect-batch-size```, ```--krona-bin```, ```--seqfilter-bin```, ```--dispr-bin``` 
 
 
 **Command Line Reference:**
-You can get this information for your version by running `bcdatabaser.pl --help`:
+
+You can also get this information for your version by running 
+`bcdatabaser.pl --help`:
 
 ```
 Usage:

@@ -73,6 +73,13 @@ docker run -u $UID:$GID -v $PWD:/data --rm iimog/bcdatabaser # arguments
 
 You're all set, skip to the [Examples](#examples) section to get started.
 
+The NCBI taxonomy databases in the docker image might be outdated. Build the image manually to get up to date versions:
+```bash
+git clone https://github.com/molbiodiv/bcdatabaser
+cd bcdatabaser
+docker build -t bcdatabaser .
+```
+
 ## Dependencies
 
 Perl Modules:

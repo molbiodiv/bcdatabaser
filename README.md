@@ -4,7 +4,7 @@
 
 The Reference DB Creator (BCdatabaser) is a pipeline to create reference databases for arbitrary markers and taxonomic groups from NCBI data.
 It can optionally be used to trim and orient the sequences and train taxonomic classifiers.
-Please cite our preprint [![DOI](https://img.shields.io/badge/DOI-10.32942%2Fosf.io%2Fcmfu2-blue.svg)](https://doi.org/10.32942/osf.io/cmfu2) in addition to the created dataset if you use this pipeline. Also consider citing the tools used in this pipeline as outlined in [CITATION](./CITATION).
+Please cite our publication [![DOI](https://img.shields.io/badge/DOI-10.1093%2Fbioinformatics%2Fbtz960-blue.svg)](https://doi.org/10.1093/bioinformatics/btz960) in addition to the created dataset if you use this pipeline. Also consider citing the tools used in this pipeline as outlined in [CITATION](./CITATION).
 
 See [the online docu](https://molbiodiv.github.io/bcdatabaser/) for more details.
 

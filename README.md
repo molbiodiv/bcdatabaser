@@ -30,7 +30,7 @@ Recommended naming scheme: `<Marker>.<Taxonomic Group>.<country code>.<date>`
 
 Basic:
  - Sequence fasta (filtered/trimmed/sintax style taxonomy header)
- 
+
 Additional:
  - Report (e.g. Taxonomy table (Krona))
 
@@ -87,7 +87,7 @@ Perl Modules:
  - FindBin
  - Log::Log4perl
  - Getopt::Long
- - Getopt::ArgvFile 
+ - Getopt::ArgvFile
  - File::Path
  - [NCBI::Taxonomy](https://github.com/greatfireball/NCBI-Taxonomy)
 
@@ -95,7 +95,7 @@ External Programs:
  - [NCBI eutils](https://www.ncbi.nlm.nih.gov/books/NBK25500)
  - [KronaTools](https://github.com/marbl/Krona)
  - [SeqFilter](https://github.com/BioInf-Wuerzburg/SeqFilter)
- - [dispr](https://github.com/molbiodiv/metabDB/issues)
+ - [dispr](https://github.com/douglasgscofield/dispr)
 
 ## Examples
 
@@ -291,11 +291,11 @@ Options:
 
     [--version]              show version number of bcdatabaser and exit
 ```
- 
+
 ## Dataset Upload
 Automated dataset upload to zenodo is possible. You have to supply a file containing the zenodo token to bcdatabaser.
 The dataset is uploaded in the name of the owner of that token. If that's you, you are able to modify metadata but not to delete the record.
- 
+
 ## Logo
 The current logo is designed by [@mirzazulfan](https://github.com/mirzazulfan).
 Thanks a lot Mirza!

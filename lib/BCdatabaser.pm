@@ -387,7 +387,7 @@ sub run_command_download_sequences{
 		$L->logdie("ERROR: Reached maximum amount of retries: $msg") if $retries >= $max_retries;
 		$L->info("Starting: $msg") if $retries == 1;
 		$L->info("Retrying: $msg") if $retries > 1;
-		$L->info($cmd):
+		$L->info($cmd);
 		my $result = qx($cmd);
 		$L->debug($result);
 		if ($? >> 8){

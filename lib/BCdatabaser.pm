@@ -147,12 +147,12 @@ sub download_sequences{
 	if ( -e $outdir."/sequences.fa" ) {
         unlink($outdir."/sequences.fa") or $L->logdie("$!");
     }
-	
+
 	$L->info("Now downloading sequences in batches of $batch_size");
 	for(my $i=1; $i<=$num_results; $i+=$batch_size){
 		my $msg = "Downloading fasta sequences for batch: $i - ".($i+$batch_size-1);
 		my $cmd = "tail -n+$i $outdir/list.filtered.txt | head -n $batch_size | cut -f1 | $epost_bin -db nuccore | $efetch_bin -format fasta >>$outdir/sequences.fa";
-		$self->run_command($cmd, $msg);
+		$self->run_command_download_sequences($cmd, $msg);
 	}
 	$L->info("Finished downloading sequences");
 }
@@ -374,5 +374,35 @@ sub run_command{
 	return $result;
 }
 
+sub run_command_download_sequences{
+	my $self = shift;
+	my $cmd = shift;
+	my $msg = shift;
+	my $ignore_error = shift;
+	my $retries = 0;
+	my $max_retries = 3; # Maximum Number of download attempts (includes the first attempt)
+	my $wait_time = 60; # Time to wait after a failed download attempt in seconds
+
+	while($retries <= $max_retries){
+		$retries ++;
+		$L->logdie("ERROR: Reached maximum amount of retries: \n$msg") if $retries >= $max_retries;
+		$L->info("Starting: $msg") if $retries == 1;
+		if ($retries > 1){
+			$L->info("Retrying in $wait_time seconds");
+			sleep($wait_time);
+			$L->info("Retrying: $msg");
+		}
+		$L->info($cmd);
+		my $result = qx($cmd);
+		$L->debug($result);
+		if ($? >> 8){
+			$L->warn("WARNING: $msg failed");
+		}
+		else{
+			$L->info("Finished: $msg");
+			return $result;
+		}
+	}
+}
 
 1;

@@ -6,7 +6,7 @@ use File::Copy;
 use NCBI::Taxonomy;
 use FindBin;
 
-our $VERSION = '1.1.1';
+our $VERSION = '1.1.2';
 
 my $L = Log::Log4perl::get_logger();
 
